@@ -353,3 +353,35 @@ CLI 已统一使用这一宿主；每次启动仍只有内置注册，自定义�
 `pursue <worldFile> <goalRequestFile> <processDirectory> [maxAttempts]` 调用有限推进器，上限1到32，默认8，按累计步骤计。目录保存 `journey.json`、`manifest.lock`、`step-001.json` 等各步记录。清单绑定完整原请求、世界文件与固定组件版本；输入文件不能兼作记录或锁。步骤请求使用原标识加 `.step-序号`，版本取原期望版本或上一笔真实回执；不会取世界后来版本偷渡过冲突。
 
 每步真实完成后重判目标；`satisfied/needsInput/blocked` 停止，预算耗尽为 `paused`，增加预算继续同一过程。完成重读先核对各步权威回执与历史反馈，不新增事件。异常为 `failed`，保留原步骤与原因，可恢复原失败步骤；换目标、完整输入或版本必须换过程目录。过程清单只是索引，正式世界和单步演绎仍是各自结果的依据。
+
+## 有界连续演绎入口
+
+`continue <worldFile> <requestFile> <processDirectory> [cumulativeAttemptBudget]` 使用现有五阶段过程。预算默认8、范围1到32，按整段累计尝试数计算。顶层严格为：
+
+```json
+{
+  "schemaVersion": 1,
+  "worldId": "continuation-river",
+  "requestId": "continue-river",
+  "expectedRevision": 0,
+  "activities": [],
+  "starts": [],
+  "onKnowledge": []
+}
+```
+
+这是字段轮廓；可运行配置须有1到16项活动和至少一个起始目标，详见 [完整请求](examples/continuation/river-request.json)。
+
+活动严格为 `id/actor/kind/intent/scenario/components`，标识唯一，actor须为起始版本已存在的普通人物。kind为 `goal` 时scenario必有goal，可有remainingGaps；kind为 `message` 时scenario只允许可选remainingGaps，消息由实际历史派生。components必须包含prepare、candidates、select、resolve、feedback各一个固定id/version。starts不得重复，只能引用goal。onKnowledge至多64项，每项严格为activityId/factId，不重复且引用已声明活动。
+
+状态回应组件五阶段标识为 `state-reaction-preparation/state-reaction-candidates/state-reaction-selection/state-reaction-action/state-reaction-feedback`，均版本 `"1"`；只为有stateChanges且本人依据完整的规则生成候选，调用原message-state-response。旧消息组件身份与版本保持。
+
+新提交的观察或分享效果匹配活动人物和factId，触发消息保留factId、sourcePersonId、receivedRevision。message活动只接受另一普通人物的实际来源；goal可因本人观察唤起。每次仍从对应人物视图核对当前保存的知识，不能用作者事实替代已被覆盖的消息。
+
+返回包含schemaVersion、worldId、requestId、revision、status、attempts、notifications、outcomes、pending。每次尝试包含序号、活动、人物、期望版本、状态、记录文件、缺口及remainingGaps；真实提交才有receipt，触发活动可有trigger。outcomes分别保留各活动最后结果。notifications是作者侧获知派发说明，不是给人物的新知识。
+
+总体status为paused、quiescent或limitReached。quiescent不替代活动的satisfied/needsInput/blocked；调用成功不保证业务已完成。累计上限限制新的和未完成的尝试，已完成记录重读不受较小预算截断。
+
+配置、世界文件路径与完整原请求绑定在continuation.json，逐次记录为turn-001.json等，锁为continuation.lock及各步锁。输入、记录和锁不能占用正式世界文件。待运行活动从原输入及原回执重建；未完成步骤遇到外部世界推进不自动重排。已正式提交后反馈失败先恢复原反馈。整段经历有多笔独立原子事件，不是全段回滚事务。
+
+实际运行与限制见 [连续演绎案例](CONTINUATION-DEMO.md)。

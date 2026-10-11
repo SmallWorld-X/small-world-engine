@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "worldId": "continuation-workshop",
+  "requestId": "continue-workshop",
+  "expectedRevision": 0,
+  "activities": [
+    {
+      "id": "inspect",
+      "actor": "resident",
+      "kind": "goal",
+      "intent": "查明地点并亲自核实办理状态",
+      "scenario": {
+        "goal": {
+          "id": "inspect-result",
+          "kind": "observeLocatedFact",
+          "factId": "equipment-available",
+          "locationFactId": "equipment-location",
+          "label": "亲自核实办理结果"
+        }
+      },
+      "components": [
+        {
+          "stage": "prepare",
+          "id": "knowledge-goal-preparation",
+          "version": "1"
+        },
+        {
+          "stage": "candidates",
+          "id": "knowledge-goal-candidates",
+          "version": "1"
+        },
+        {
+          "stage": "select",
+          "id": "knowledge-goal-selection",
+          "version": "1"
+        },
+        {
+          "stage": "resolve",
+          "id": "knowledge-goal-action",
+          "version": "1"
+        },
+        {
+          "stage": "feedback",
+          "id": "knowledge-goal-feedback",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "id": "request",
+      "actor": "resident",
+      "kind": "message",
+      "intent": "按本人所知条件提出申请",
+      "scenario": {},
+      "components": [
+        {
+          "stage": "prepare",
+          "id": "state-reaction-preparation",
+          "version": "1"
+        },
+        {
+          "stage": "candidates",
+          "id": "state-reaction-candidates",
+          "version": "1"
+        },
+        {
+          "stage": "select",
+          "id": "state-reaction-selection",
+          "version": "1"
+        },
+        {
+          "stage": "resolve",
+          "id": "state-reaction-action",
+          "version": "1"
+        },
+        {
+          "stage": "feedback",
+          "id": "state-reaction-feedback",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "id": "process",
+      "actor": "steward",
+      "kind": "message",
+      "intent": "按职责与收到的申请办理",
+      "scenario": {},
+      "components": [
+        {
+          "stage": "prepare",
+          "id": "state-reaction-preparation",
+          "version": "1"
+        },
+        {
+          "stage": "candidates",
+          "id": "state-reaction-candidates",
+          "version": "1"
+        },
+        {
+          "stage": "select",
+          "id": "state-reaction-selection",
+          "version": "1"
+        },
+        {
+          "stage": "resolve",
+          "id": "state-reaction-action",
+          "version": "1"
+        },
+        {
+          "stage": "feedback",
+          "id": "state-reaction-feedback",
+          "version": "1"
+        }
+      ]
+    }
+  ],
+  "starts": [
+    "inspect"
+  ],
+  "onKnowledge": [
+    {
+      "activityId": "request",
+      "factId": "equipment-location"
+    },
+    {
+      "activityId": "process",
+      "factId": "inspection-request"
+    },
+    {
+      "activityId": "inspect",
+      "factId": "equipment-available"
+    }
+  ]
+}

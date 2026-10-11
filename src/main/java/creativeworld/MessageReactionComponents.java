@@ -19,7 +19,17 @@ public final class MessageReactionComponents {
             new Reaction("message-reaction-feedback", Stage.FEEDBACK));
     }
 
-    private record Reaction(String id, Stage stage) implements ExperienceComponent {
+    /** 单独的组件身份，保留旧消息分享组件的版本与行为。 */
+    public static List<ExperienceComponent> stateResponses() {
+        return List.of(new Reaction("state-reaction-preparation", Stage.PREPARE, true),
+            new Reaction("state-reaction-candidates", Stage.CANDIDATES, true),
+            new Reaction("state-reaction-selection", Stage.SELECT, true),
+            new Reaction("state-reaction-action", Stage.RESOLVE, true),
+            new Reaction("state-reaction-feedback", Stage.FEEDBACK, true));
+    }
+
+    private record Reaction(String id, Stage stage, boolean stateResponse) implements ExperienceComponent {
+        Reaction(String id, Stage stage) { this(id, stage, false); }
         public String version() { return "1"; }
         public ObjectNode run(Context context) {
             Objects.requireNonNull(context, "消息回应上下文不能为空");
@@ -33,9 +43,9 @@ public final class MessageReactionComponents {
             if (stage == Stage.FEEDBACK) return DELEGATES.get(stage.ordinal()).run(delegated);
             // 原组件统一核对请求身份、起始版本和提交前回执。
             DELEGATES.get(Stage.PREPARE.ordinal()).run(delegated);
-            Assessment assessed = assess(view, request.get("scenario").get("message"));
+            Assessment assessed = assess(view, request.get("scenario").get("message"), stateResponse);
             if (stage == Stage.PREPARE) return prepared(assessed);
-            ObjectNode generated = candidates(assessed);
+            ObjectNode generated = candidates(assessed, stateResponse);
             if (stage == Stage.CANDIDATES || !text(generated, "status").equals("ready")) return generatedFor(stage, generated);
             JsonNode saved = context.outputs().path(Stage.CANDIDATES.key()).path("candidates");
             if (!canonical(saved).equals(canonical(generated.get("candidates"))))
@@ -259,16 +269,19 @@ public final class MessageReactionComponents {
         ObjectNode result = JSON.createObjectNode().put("status", assessed.eligible.isEmpty() ? "needsInput" : "ready");
         result.set("evidence", assessed.evidence.deepCopy()); result.set("gaps", assessed.gaps.deepCopy()); return result;
     }
-    private static ObjectNode candidates(Assessment assessed) {
+    private static ObjectNode candidates(Assessment assessed, boolean stateResponse) {
         ObjectNode result = prepared(assessed); ArrayNode rows = result.putArray("candidates"), evidence = (ArrayNode) result.get("evidence");
         for (Eligible eligible : assessed.eligible) {
             JsonNode rule = eligible.rule;
-            ObjectNode candidate = rows.addObject().put("id", text(rule, "id")).put("module", "message-response").put("moduleVersion", "1")
+            if (stateResponse && !rule.has("stateChanges")) continue;
+            ObjectNode candidate = rows.addObject().put("id", text(rule, "id")).put("module", stateResponse ? "message-state-response" : "message-response").put("moduleVersion", "1")
                 .put("priority", rule.get("priority").intValue()).put("description", text(assessed.policy, "goal") + "；" + text(rule, "description"));
-            ObjectNode arguments = candidate.putObject("arguments").put("ruleId", text(rule, "id")); arguments.set("message", assessed.message.deepCopy());
+            ObjectNode arguments = candidate.putObject("arguments");
+            if (!stateResponse) arguments.put("ruleId", text(rule, "id"));
+            arguments.set("message", assessed.message.deepCopy());
             candidate.set("evidence", eligible.evidence.deepCopy()); append(evidence, eligible.evidence);
         }
-        if (rows.isEmpty()) result.put("reason", "本人消息或回应依据尚未满足，未编造动作。");
+        if (rows.isEmpty()) result.put("status", "needsInput").put("reason", "本人消息或回应依据尚未满足，未编造动作。");
         return result;
     }
     private static ObjectNode generatedFor(Stage stage, ObjectNode generated) {

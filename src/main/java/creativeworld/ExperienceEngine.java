@@ -22,6 +22,7 @@ public final class ExperienceEngine {
             for (ExperienceComponent component : BuiltinExperienceComponents.all()) register(component);
             for (ExperienceComponent component : KnowledgeGoalComponents.all()) register(component);
             for (ExperienceComponent component : MessageReactionComponents.all()) register(component);
+            for (ExperienceComponent component : MessageReactionComponents.stateResponses()) register(component);
         }
     }
     public synchronized void register(ExperienceComponent component) {

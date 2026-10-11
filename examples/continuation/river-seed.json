@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "worldId": "continuation-river",
+  "title": "河港镇：从申请到登记，再到现场核实",
+  "worldTime": {
+    "unit": "year",
+    "year": 100
+  },
+  "places": [
+    {
+      "id": "registry",
+      "name": "办理处"
+    },
+    {
+      "id": "warehouse",
+      "name": "目标现场"
+    }
+  ],
+  "routes": [
+    {
+      "from": "registry",
+      "to": "warehouse"
+    },
+    {
+      "from": "warehouse",
+      "to": "registry"
+    }
+  ],
+  "characters": [
+    {
+      "id": "apprentice",
+      "name": "求助者",
+      "place": "registry",
+      "publicProfile": {
+        "occupation": "学徒"
+      },
+      "privateProfile": {
+        "knownRoutes": [
+          {
+            "from": "registry",
+            "to": "warehouse",
+            "evidenceFactId": "known-route"
+          }
+        ],
+        "responsePolicy": {
+          "goalId": "submit-request",
+          "goal": "先提出有记录的申请，再核实结果",
+          "rules": [
+            {
+              "id": "submit-on-location",
+              "priority": 10,
+              "when": {
+                "factId": "cargo-location",
+                "equals": "warehouse"
+              },
+              "conditions": [],
+              "stateChanges": [
+                {
+                  "factId": "registration-request",
+                  "expectedValue": false,
+                  "value": true
+                }
+              ],
+              "shareFactIds": [
+                "registration-request"
+              ],
+              "description": "按本人收到的消息提出决定，合法性由世界法则裁决"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "keeper",
+      "name": "办理者",
+      "place": "registry",
+      "publicProfile": {
+        "occupation": "货栈保管员"
+      },
+      "privateProfile": {
+        "responsePolicy": {
+          "goalId": "process-request",
+          "goal": "收到申请后在职责范围内办理并告知结果",
+          "rules": [
+            {
+              "id": "process-known-request",
+              "priority": 10,
+              "when": {
+                "factId": "registration-request",
+                "equals": true
+              },
+              "conditions": [],
+              "stateChanges": [
+                {
+                  "factId": "handoff-state",
+                  "expectedValue": "pending",
+                  "value": "registered"
+                },
+                {
+                  "factId": "registration-complete",
+                  "expectedValue": false,
+                  "value": true
+                }
+              ],
+              "shareFactIds": [
+                "handoff-state"
+              ],
+              "description": "按本人收到的消息提出决定，合法性由世界法则裁决"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "smith",
+      "name": "未参与者",
+      "place": "warehouse",
+      "publicProfile": {},
+      "privateProfile": {
+        "concern": "没有接触这段办理过程"
+      }
+    }
+  ],
+  "facts": [
+    {
+      "id": "cargo-location",
+      "subject": "service",
+      "predicate": "located-at",
+      "value": "warehouse",
+      "mode": "fixed",
+      "knownBy": [
+        "keeper"
+      ],
+      "observableAt": [
+        "registry"
+      ]
+    },
+    {
+      "id": "known-route",
+      "subject": "registry",
+      "predicate": "route-open",
+      "value": true,
+      "mode": "fixed",
+      "knownBy": [
+        "apprentice",
+        "keeper"
+      ]
+    },
+    {
+      "id": "service-role",
+      "subject": "keeper",
+      "predicate": "service-role",
+      "value": "keeper",
+      "mode": "fixed",
+      "knownBy": [
+        "keeper"
+      ]
+    },
+    {
+      "id": "registration-request",
+      "subject": "apprentice",
+      "predicate": "requested",
+      "value": false,
+      "mode": "state",
+      "knownBy": [
+        "apprentice"
+      ],
+      "observableAt": [
+        "registry"
+      ]
+    },
+    {
+      "id": "handoff-state",
+      "subject": "service",
+      "predicate": "result",
+      "value": "pending",
+      "mode": "state",
+      "knownBy": [
+        "keeper"
+      ],
+      "observableAt": [
+        "registry",
+        "warehouse"
+      ]
+    },
+    {
+      "id": "registration-complete",
+      "subject": "service",
+      "predicate": "record-complete",
+      "value": false,
+      "mode": "state",
+      "knownBy": [
+        "keeper"
+      ],
+      "observableAt": [
+        "registry",
+        "warehouse"
+      ]
+    },
+    {
+      "id": "resource-quantity",
+      "subject": "service",
+      "predicate": "quantity",
+      "value": 40,
+      "mode": "state",
+      "knownBy": [
+        "keeper"
+      ],
+      "observableAt": [
+        "warehouse"
+      ]
+    },
+    {
+      "id": "further-permission",
+      "subject": "service",
+      "predicate": "pickup-permission",
+      "value": false,
+      "mode": "state",
+      "knownBy": [
+        "keeper"
+      ],
+      "observableAt": [
+        "warehouse"
+      ]
+    },
+    {
+      "id": "private-origin",
+      "subject": "service",
+      "predicate": "hidden-history",
+      "value": "作者保留的未揭示资料",
+      "mode": "fixed",
+      "knownBy": []
+    }
+  ],
+  "laws": [
+    {
+      "id": "request-writer",
+      "kind": "writeAccess",
+      "factId": "registration-request",
+      "actors": [
+        "apprentice"
+      ]
+    },
+    {
+      "id": "result-writer",
+      "kind": "writeAccess",
+      "factId": "handoff-state",
+      "actors": [
+        "keeper"
+      ]
+    },
+    {
+      "id": "record-writer",
+      "kind": "writeAccess",
+      "factId": "registration-complete",
+      "actors": [
+        "keeper"
+      ]
+    },
+    {
+      "id": "permission-writer",
+      "kind": "writeAccess",
+      "factId": "further-permission",
+      "actors": []
+    },
+    {
+      "id": "result-domain",
+      "kind": "oneOf",
+      "factId": "handoff-state",
+      "values": [
+        "pending",
+        "registered"
+      ]
+    },
+    {
+      "id": "resource-positive",
+      "kind": "range",
+      "factId": "resource-quantity",
+      "min": 0
+    },
+    {
+      "id": "result-requires-request-and-role",
+      "kind": "changeRequires",
+      "factId": "handoff-state",
+      "whenEquals": "registered",
+      "conditions": [
+        {
+          "factId": "registration-request",
+          "equals": true
+        }
+      ],
+      "actorCondition": {
+        "predicate": "service-role",
+        "equals": "keeper"
+      }
+    }
+  ]
+}

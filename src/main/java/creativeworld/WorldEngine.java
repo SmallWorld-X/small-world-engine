@@ -50,6 +50,10 @@ public final class WorldEngine {
         return GoalJourney.run(world, experience, request, directory, maxAttempts);
     }
 
+    public ObjectNode continueWorld(WorldStore world, JsonNode request, Path directory, int maxAttempts) throws IOException {
+        return WorldContinuation.run(world, experience, request, directory, maxAttempts);
+    }
+
     private static void check(ActionBinding binding) {
         if (!binding.identity.id.equals(binding.module.id())
             || !binding.identity.version.equals(moduleVersion(binding.module.version())))

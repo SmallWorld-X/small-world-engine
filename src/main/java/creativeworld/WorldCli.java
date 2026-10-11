@@ -11,7 +11,7 @@ import static creativeworld.Protocol.*;
 public final class WorldCli {
     public static void main(String[] args) {
         try {
-            if (args.length == 0) throw bad("需要命令：construct、confirm、prepare-draft、prepare、init、inspect、view、view-at、apply、history、step、experience 或 pursue");
+            if (args.length == 0) throw bad("需要命令：construct、confirm、prepare-draft、prepare、init、inspect、view、view-at、apply、history、step、experience、pursue 或 continue");
             WorldEngine engine = new WorldEngine();
             JsonNode result;
             switch (args[0]) {
@@ -79,6 +79,18 @@ public final class WorldCli {
                     }
                     int budget = args.length == 5 ? Integer.parseInt(args[4]) : 8;
                     result = engine.pursue(engine.openWorld(Path.of(args[1])), JSON.readTree(input.toFile()), directory, budget);
+                }
+                case "continue" -> {
+                    if (args.length != 4 && args.length != 5) throw bad("continue需要世界文件、活动请求、过程目录及可选累计尝试上限");
+                    Path input = Path.of(args[2]), directory = Path.of(args[3]);
+                    distinct(input, Path.of(args[1])); distinct(input, directory.resolve("continuation.json"));
+                    distinct(input, directory.resolve("continuation.lock"));
+                    for (int turn = 1; turn <= 32; turn++) {
+                        Path file = directory.resolve("turn-%03d.json".formatted(turn));
+                        distinct(input, file); distinct(input, file.resolveSibling(file.getFileName() + ".lock"));
+                    }
+                    int budget = args.length == 5 ? Integer.parseInt(args[4]) : 8;
+                    result = engine.continueWorld(engine.openWorld(Path.of(args[1])), JSON.readTree(input.toFile()), directory, budget);
                 }
                 default -> throw bad("命令不支持");
             }
