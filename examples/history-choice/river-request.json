@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "worldId": "continuation-river",
+  "requestId": "river-history-choice",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "intent": "依据本人实际收到的消息，决定先询问当前办理状态还是下一步许可",
+  "components": [
+    {"stage": "prepare", "id": "declared-preparation", "version": "1"},
+    {"stage": "candidates", "id": "declared-candidates", "version": "1"},
+    {"stage": "select", "id": "priority-selection", "version": "1"},
+    {"stage": "resolve", "id": "selected-action", "version": "1"},
+    {"stage": "feedback", "id": "actual-feedback", "version": "1"}
+  ],
+  "scenario": {
+    "requiredEvidence": [
+      {"path": "/self/id", "label": "行动者本人", "equals": "apprentice"},
+      {"path": "/self/place", "label": "本人仍在办理处", "equals": "registry"}
+    ],
+    "candidates": [
+      {
+        "id": "ask-next-permission",
+        "module": "ask",
+        "moduleVersion": "1",
+        "arguments": {"target": "keeper", "factId": "further-permission"},
+        "description": "本人收到已登记的办理回应后，询问下一步许可；不把询问写成已经获准领取",
+        "priority": 10,
+        "evidence": [
+          {"path": "/nearby/0/id", "label": "办理者仍在同地", "equals": "keeper"},
+          {"path": "/knowledge/2/factId", "label": "本人收到的地点消息", "equals": "cargo-location"},
+          {"path": "/knowledge/2/value", "label": "消息中的目标地点", "equals": "warehouse"},
+          {"path": "/knowledge/2/source", "label": "实际地点消息来源", "equals": "keeper"},
+          {"path": "/knowledge/2/revision", "label": "实际询问接收版本", "equals": 1},
+          {"path": "/knowledge/3/factId", "label": "本人收到的办理结果", "equals": "handoff-state"},
+          {"path": "/knowledge/3/value", "label": "回应中的已登记状态", "equals": "registered"},
+          {"path": "/knowledge/3/source", "label": "实际办理回应来源", "equals": "keeper"},
+          {"path": "/knowledge/3/revision", "label": "实际办理回应接收版本", "equals": 3}
+        ]
+      },
+      {
+        "id": "ask-current-result",
+        "module": "ask",
+        "moduleVersion": "1",
+        "arguments": {"target": "keeper", "factId": "handoff-state"},
+        "description": "本人已经收到地点消息，先向同地办理者询问当前办理状态",
+        "priority": 1,
+        "evidence": [
+          {"path": "/nearby/0/id", "label": "办理者仍在同地", "equals": "keeper"},
+          {"path": "/knowledge/2/factId", "label": "本人收到的地点消息", "equals": "cargo-location"},
+          {"path": "/knowledge/2/value", "label": "消息中的目标地点", "equals": "warehouse"},
+          {"path": "/knowledge/2/source", "label": "实际地点消息来源", "equals": "keeper"},
+          {"path": "/knowledge/2/revision", "label": "实际询问接收版本", "equals": 1}
+        ]
+      }
+    ],
+    "remainingGaps": [
+      "询问下一步许可只获得消息，不授予取货许可；原许可仍为false。",
+      "领取、实际运送和资源消耗尚未演绎；资源数量40保持不变。"
+    ]
+  }
+}
