@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "requestId": "genesis-travel-first",
+  "expectedRevision": 1,
+  "actor": "apprentice",
+  "to": "warehouse"
+}

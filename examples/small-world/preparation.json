@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "worldId": "small-world-river-town",
+  "actor": "apprentice",
+  "intent": "原创作者设定：区分查明铁料与实际取料的准备。到现场观察可以完成核实目标，不能据此把登记、许可或运送量补成已完成。",
+  "templateId": "river-town-inquiry-and-pickup",
+  "templateVersion": "1",
+  "requirements": [
+    {"id": "town-basis", "label": "世界背景：河运与旧粮仓形成镇子的来由", "stage": "background", "factId": "town-origin", "scope": "world"},
+    {"id": "institution-basis", "label": "交接制度已有明确依据，不能凭空拦人", "stage": "background", "factId": "cargo-handoff-rule", "scope": "world"},
+    {"id": "reason-to-ask", "label": "本人看到码头原处没有铁料", "stage": "inquire", "factId": "missing-at-wharf", "scope": "actor"},
+    {"id": "assignment", "label": "本人的委托是查明而非擅自取货", "stage": "inquire", "factId": "cargo-assignment", "scope": "actor"},
+    {"id": "location-message", "label": "本人已有有来源的货栈地点消息", "stage": "locate", "factId": "cargo-location", "scope": "actor", "freshness": "any"},
+    {"id": "onsite-handoff", "label": "当前版本本人直接观察交接状态", "stage": "inspect", "factId": "cargo-handoff-status", "scope": "actor", "freshness": "currentRevision"},
+    {"id": "owner", "label": "取料准备：知道货主是谁", "stage": "pickup", "factId": "cargo-owner", "scope": "actor"},
+    {"id": "whole-batch-weight", "label": "整批重量已知，不等于已选运送量", "stage": "pickup", "factId": "cargo-weight-kg", "scope": "actor"},
+    {"id": "available-tool", "label": "知道货栈可申请手车，不等于已经安排搬运", "stage": "pickup", "factId": "cargo-transport-tool", "scope": "actor"},
+    {"id": "registration", "label": "世界当前已登记本批货物", "stage": "pickup", "factId": "cargo-registration-state", "scope": "world", "equals": "registered"},
+    {"id": "world-permission", "label": "世界当前有授予阿禾的明确领取许可", "stage": "pickup", "factId": "cargo-pickup-permission", "scope": "world", "equals": true},
+    {"id": "actor-permission", "label": "本人收到明确领取许可的知识依据", "stage": "pickup", "factId": "cargo-pickup-permission", "scope": "actor", "equals": true},
+    {"id": "transport-quantity", "label": "作者与货主明确本次运送数量，整批40块不能代替这项决定", "stage": "transport", "factId": "cargo-transport-quantity", "scope": "world"}
+  ]
+}

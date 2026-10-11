@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "worldId": "small-world-river-town",
+  "requestId": "small-world-author-registration-followup",
+  "expectedRevision": 3,
+  "actor": "@author",
+  "reason": "原创作者设定；这是作者明确写入的后续事件，须在阿禾已到货栈并现场核实之后执行，运行者按实际回执设置expectedRevision。沈砚凭手中的H-17随货签与到栈回条完成本栈交接登记，仍保留行会H-16副本待复核的疑点；因阿禾先核实、没有擅自取料，对他的看法有所改变。本事件不是人物自主推导出的完整剧情，不授予领取许可，不选运送量，不移动铁料，不确认舞弊原因。",
+  "requiresKnown": ["cargo-slip-code", "cargo-left-wharf", "cargo-handoff-rule"],
+  "effects": [
+    {"type": "fact.change", "factId": "cargo-registration-state", "expectedValue": "pending", "value": "registered"},
+    {"type": "fact.change", "factId": "cargo-handoff-status", "expectedValue": "held-awaiting-registration", "value": "registered-awaiting-permission"},
+    {"type": "knowledge.learn", "personId": "keeper", "factId": "cargo-registration-state", "sourcePersonId": "@world"},
+    {"type": "knowledge.learn", "personId": "keeper", "factId": "cargo-handoff-status", "sourcePersonId": "@world"},
+    {"type": "relationship.change", "from": "keeper", "to": "apprentice", "expectedValue": "只按行会手续接待", "value": "认可其先核实再交接的做法", "basis": "原创作者设定的本次关系回应：阿禾到货栈核实交接状态，没有把师徒关系当成领取许可；沈砚在核对自己持有的随货签和回条后完成登记，但没有承诺代货主放行。"}
+  ]
+}

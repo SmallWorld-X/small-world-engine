@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "skeleton-apprentice-handoff",
+  "expectedRevision": 5,
+  "actor": "apprentice",
+  "intent": "原创作者设定：按师傅的查明委托，先问铁料实际所在，再到现场观察交接状态；不自行领取或声称铁料已送到。",
+  "scenario": {
+    "goal": {
+      "id": "apprentice-check-handoff",
+      "kind": "observeLocatedFact",
+      "factId": "cargo-handoff-status",
+      "locationFactId": "cargo-location",
+      "label": "找到铁料所在货栈并现场观察交接状态"
+    },
+    "remainingGaps": [
+      "本人尚未取得收货人的新许可消息；未知许可不能因作者已输入决定而自动刷新。",
+      "登记仍待核验，运送量未定义；现场观察交接状态不等于领取或送达。"
+    ]
+  },
+  "components": [
+    {
+      "stage": "prepare",
+      "id": "knowledge-goal-preparation",
+      "version": "1"
+    },
+    {
+      "stage": "candidates",
+      "id": "knowledge-goal-candidates",
+      "version": "1"
+    },
+    {
+      "stage": "select",
+      "id": "knowledge-goal-selection",
+      "version": "1"
+    },
+    {
+      "stage": "resolve",
+      "id": "knowledge-goal-action",
+      "version": "1"
+    },
+    {
+      "stage": "feedback",
+      "id": "knowledge-goal-feedback",
+      "version": "1"
+    }
+  ]
+}

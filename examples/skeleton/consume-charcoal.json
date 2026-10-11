@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "smith-consumes-one-bag",
+  "expectedRevision": 0,
+  "actor": "smith",
+  "reason": "作者明确输入：林桂在铁铺试火消耗一袋木炭并现场清点；未定义完成农具或自动生产。",
+  "requiresKnown": [
+    "charcoal-quantity"
+  ],
+  "effects": [
+    {
+      "type": "fact.change",
+      "factId": "charcoal-quantity",
+      "expectedValue": 8,
+      "value": 7
+    },
+    {
+      "type": "knowledge.learn",
+      "personId": "smith",
+      "factId": "charcoal-quantity",
+      "sourcePersonId": "@world"
+    }
+  ]
+}

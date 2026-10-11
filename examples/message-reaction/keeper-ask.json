@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "worldId": "message-reaction-river-town",
+  "requestId": "reaction-keeper-receives-discovery",
+  "expectedRevision": 3,
+  "actor": "keeper",
+  "target": "apprentice",
+  "factId": "cargo-handoff-status"
+}

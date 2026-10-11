@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "worldId": "message-reaction-river-town",
+  "actor": "apprentice",
+  "intent": "检查收到回应后本人知道哪些条件，仍有哪些取货准备缺口。",
+  "templateId": "message-does-not-equal-cargo-handoff",
+  "templateVersion": "1",
+  "requirements": [
+    {
+      "id": "location-message",
+      "label": "本人已有铁料位置消息",
+      "stage": "locate",
+      "factId": "cargo-location",
+      "scope": "actor"
+    },
+    {
+      "id": "handoff-state",
+      "label": "本人的交接状态认识",
+      "stage": "inspect",
+      "factId": "cargo-handoff-status",
+      "scope": "actor"
+    },
+    {
+      "id": "received-rule",
+      "label": "本人获知交接规则",
+      "stage": "explain",
+      "factId": "cargo-handoff-rule",
+      "scope": "actor"
+    },
+    {
+      "id": "actor-permission",
+      "label": "本人收到明确放行许可",
+      "stage": "pickup",
+      "factId": "cargo-pickup-permission",
+      "scope": "actor",
+      "equals": true
+    },
+    {
+      "id": "world-registration",
+      "label": "本批已登记",
+      "stage": "pickup",
+      "factId": "cargo-registration-state",
+      "scope": "world",
+      "equals": "registered"
+    },
+    {
+      "id": "transport-quantity",
+      "label": "本次运送数量已决定，整批数量不能替代",
+      "stage": "transport",
+      "factId": "cargo-transport-quantity",
+      "scope": "world"
+    }
+  ]
+}

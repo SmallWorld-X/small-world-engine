@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "owner-explicit-pickup-permission",
+  "expectedRevision": 1,
+  "actor": "smith",
+  "reason": "作者明确输入：收货人林桂决定允许阿禾领取；登记、运送量和实际搬运仍待完成。此权限不是保管员代替货主作出的决定。",
+  "requiresKnown": [
+    "cargo-owner",
+    "cargo-pickup-permission"
+  ],
+  "effects": [
+    {
+      "type": "fact.change",
+      "factId": "cargo-pickup-permission",
+      "expectedValue": false,
+      "value": true
+    }
+  ]
+}

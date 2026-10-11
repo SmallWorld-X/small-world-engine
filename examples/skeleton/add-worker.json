@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "author-adds-named-worker",
+  "expectedRevision": 2,
+  "actor": "@author",
+  "reason": "作者明确新增石川作为十二名码头工中的具名成员，并声明本人旧路线认识；不是自动生成人口。",
+  "effects": [
+    {
+      "type": "person.add",
+      "person": {
+        "id": "new-porter",
+        "name": "石川",
+        "birthYear": 80,
+        "place": "warehouse",
+        "publicProfile": {
+          "source": "作者本轮明确新增",
+          "occupation": "码头新船工",
+          "groupId": "dock-workers",
+          "appearance": "肩上搭着旧麻绳，手指还沾着货栈木屑"
+        },
+        "privateProfile": {
+          "source": "作者本轮明确新增",
+          "goal": "先向保管员了解登记状态，再回南码头听安排；不自行放货",
+          "knownRoutes": [
+            {
+              "from": "warehouse",
+              "to": "wharf",
+              "evidenceFactId": "new-porter-route-warehouse-wharf"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "group.member.add",
+      "groupId": "dock-workers",
+      "personId": "new-porter"
+    },
+    {
+      "type": "fact.define",
+      "fact": {
+        "id": "new-porter-route-warehouse-wharf",
+        "subject": "new-porter.route.warehouse.wharf",
+        "predicate": "usable",
+        "value": true,
+        "mode": "fixed",
+        "knownBy": [
+          "new-porter"
+        ],
+        "observableAt": [
+          "warehouse",
+          "wharf"
+        ]
+      }
+    }
+  ]
+}

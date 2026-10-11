@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "requestId": "author-declares-pickup-basis",
+  "expectedRevision": 1,
+  "actor": "@author",
+  "reason": "作者为示例明确补充交接依据，并声明阿禾已知的部分；没有领取、运输或送达效果",
+  "effects": [
+    {"type":"fact.define","fact":{"id":"cargo-owner","subject":"iron-stock","predicate":"owner","value":"smith","mode":"fixed","knownBy":["smith","apprentice"]}},
+    {"type":"fact.define","fact":{"id":"cargo-assignment","subject":"apprentice","predicate":"current-cargo-assignment","value":"受林桂委托，取回铁料到石岭铁铺","mode":"state","knownBy":["smith","apprentice"]}},
+    {"type":"fact.define","fact":{"id":"cargo-pickup-permission","subject":"iron-stock","predicate":"pickup-permitted-for-apprentice","value":true,"mode":"state","knownBy":["smith","apprentice"],"observableAt":["wharf","warehouse"]}},
+    {"type":"fact.define","fact":{"id":"cargo-weight-kg","subject":"iron-stock","predicate":"weight-kg","value":60,"mode":"fixed","knownBy":["smith","apprentice"]}},
+    {"type":"fact.define","fact":{"id":"cargo-transport-tool","subject":"apprentice","predicate":"available-cargo-transport-tool","value":"铁铺借出的手推车；承载能力和道路适用性仍需另行检查","mode":"state","knownBy":["smith","apprentice"]}},
+    {"type":"fact.define","fact":{"id":"cargo-delivery-deadline","subject":"iron-stock","predicate":"delivery-deadline","value":"今日傍晚之前；本例没有小时级时钟或行程时长计算","mode":"fixed","knownBy":["smith","apprentice"]}}
+  ]
+}

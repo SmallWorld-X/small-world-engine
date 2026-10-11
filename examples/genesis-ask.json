@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "requestId": "genesis-ask-first",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "target": "boatman",
+  "factId": "cargo-location"
+}

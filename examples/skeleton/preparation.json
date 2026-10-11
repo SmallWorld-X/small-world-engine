@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "actor": "apprentice",
+  "intent": "按本人资料检查查问与领取准备，已授单项许可也不能冒充完成运输",
+  "templateId": "skeleton-pickup",
+  "templateVersion": "1",
+  "requirements": [
+    {
+      "id": "location-message",
+      "label": "本人知道铁料位置",
+      "stage": "locate",
+      "factId": "cargo-location",
+      "scope": "actor",
+      "equals": "warehouse"
+    },
+    {
+      "id": "onsite-handoff",
+      "label": "本人于本版本直接观察交接状态",
+      "stage": "inspect",
+      "factId": "cargo-handoff-status",
+      "scope": "actor",
+      "freshness": "currentRevision"
+    },
+    {
+      "id": "world-permission",
+      "label": "收货人明确允许领取",
+      "stage": "pickup",
+      "factId": "cargo-pickup-permission",
+      "scope": "world",
+      "equals": true
+    },
+    {
+      "id": "actor-permission",
+      "label": "本人持有允许领取的消息",
+      "stage": "pickup",
+      "factId": "cargo-pickup-permission",
+      "scope": "actor",
+      "equals": true
+    },
+    {
+      "id": "registration",
+      "label": "登记完成",
+      "stage": "pickup",
+      "factId": "cargo-registration-state",
+      "scope": "world",
+      "equals": "registered"
+    },
+    {
+      "id": "transport-quantity",
+      "label": "约定实际运送量",
+      "stage": "transport",
+      "factId": "cargo-transport-quantity",
+      "scope": "world"
+    }
+  ]
+}

@@ -1,0 +1,1499 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "title": "河港镇：任命核验员与消息后的登记决定",
+  "idea": "原创作者设定。河港镇以河运、货栈和农具买卖维持生计，制度曾替商人解决丢货争执，也会使急着开工的铁铺为难。本次从铁料已离开码头、货栈暂扣待登记开始，让不同人物凭自己的消息和目的核实情况；经营压力中藏着一个登记编号的疑点，不预设偷盗，也不预设学徒最终送达。全部人物、地理、制度和历史均为虚构素材，不是外部历史资料。 本轮写权限均由作者按已有收货人归属、保管与登记职责明确选择；不会从背景文字自动推断权限。作者输入铁匠消耗一袋木炭、货主决定许可与新船工加入；这些是可复核的事件输入，不是自主心理或生产调度。 本轮培训依据、行会临时委托、初始未任命资格与回应规则由作者明确给定；引擎只按结构化条件核对及执行，不证明外部证书真伪或自主心理。资格变化是当前时间线的新事件，不追溯改写过去。",
+  "constructors": [
+    {
+      "id": "world",
+      "version": "1"
+    },
+    {
+      "id": "person",
+      "version": "1"
+    },
+    {
+      "id": "faction",
+      "version": "1"
+    },
+    {
+      "id": "group",
+      "version": "1"
+    },
+    {
+      "id": "extra",
+      "version": "1"
+    },
+    {
+      "id": "relationship",
+      "version": "1"
+    },
+    {
+      "id": "emotion",
+      "version": "1"
+    },
+    {
+      "id": "law",
+      "version": "1"
+    }
+  ],
+  "unresolved": [
+    "查明地点与观察交接状态是本轮目标；领取许可、实际运送数量和运送行为仍须另行明确。",
+    "货栈登记副本上的编号疑点尚未经过人物现场复核；不得直接写成有人偷料。",
+    "本世界只声明年100，不设置小时、日历或自动到期。订单催促是人物处境，不由未实现的时钟调度执行。",
+    "初始感受和私人目标属于作者给定资料，当前不会自动演算人物情绪、谈判或利益选择。",
+    "状态写权限已由作者显式声明；只限制指定事实的写入者，不构成通用运输、所有权或经营模拟。",
+    "本轮林桂可以明确授予阿禾领取许可，但登记、约定运输量、安排搬运和实际送达均未完成；单项许可不代表交接全部条件已满足。",
+    "登记与交接阶段状态会在同一决定中同时更新；领取许可仍未授予，运送数量与搬运行为仍未执行。"
+  ],
+  "sections": {
+    "world": {
+      "worldTime": {
+        "unit": "year",
+        "year": 100
+      },
+      "places": [
+        {
+          "id": "wharf",
+          "name": "南码头"
+        },
+        {
+          "id": "warehouse",
+          "name": "沿河货栈"
+        },
+        {
+          "id": "forge",
+          "name": "石岭铁铺"
+        },
+        {
+          "id": "guild-office",
+          "name": "行会办事处"
+        },
+        {
+          "id": "market",
+          "name": "河港集市"
+        },
+        {
+          "id": "residences",
+          "name": "北坡住宅区"
+        }
+      ],
+      "routes": [
+        {
+          "from": "wharf",
+          "to": "warehouse"
+        },
+        {
+          "from": "warehouse",
+          "to": "wharf"
+        },
+        {
+          "from": "warehouse",
+          "to": "guild-office"
+        },
+        {
+          "from": "guild-office",
+          "to": "warehouse"
+        },
+        {
+          "from": "warehouse",
+          "to": "market"
+        },
+        {
+          "from": "market",
+          "to": "warehouse"
+        },
+        {
+          "from": "market",
+          "to": "forge"
+        },
+        {
+          "from": "forge",
+          "to": "market"
+        },
+        {
+          "from": "market",
+          "to": "residences"
+        },
+        {
+          "from": "residences",
+          "to": "market"
+        },
+        {
+          "from": "forge",
+          "to": "residences"
+        },
+        {
+          "from": "residences",
+          "to": "forge"
+        }
+      ],
+      "facts": [
+        {
+          "id": "setting-provenance",
+          "subject": "river-town",
+          "predicate": "provenance",
+          "value": "原创作者设定；地理、历史、制度、人物及初始经历均为本次虚构资料",
+          "mode": "fixed",
+          "knownBy": []
+        },
+        {
+          "id": "town-origin",
+          "subject": "river-town",
+          "predicate": "origin",
+          "value": "镇子起于河湾旧渡口与北坡驻粮仓；驻军撤去后，船工、货栈和农具作坊留下，往来的粮船与内陆商队使街市连成镇。",
+          "mode": "fixed",
+          "knownBy": [
+            "smith",
+            "boatman",
+            "keeper",
+            "clerk",
+            "merchant"
+          ]
+        },
+        {
+          "id": "town-geography",
+          "subject": "river-town",
+          "predicate": "geography",
+          "value": "南临缓流河湾，东岸设货栈及登记处，北接石岭的内陆道路；住宅建在较高北坡，集市居河港与铁铺之间。河港提供转运，北坡提供避水高地；不设未声明的距离与行程时长。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "boatman",
+            "keeper",
+            "clerk",
+            "merchant"
+          ]
+        },
+        {
+          "id": "handoff-rule-origin",
+          "subject": "port-guild",
+          "predicate": "registration-origin",
+          "value": "年92曾有两家商户争认同一批粮袋，因口头交接没有凭据而延误结算；行会此后要求货栈先登记随货签、批次与收货人，再办理领取。",
+          "mode": "fixed",
+          "knownBy": [
+            "smith",
+            "boatman",
+            "keeper",
+            "clerk",
+            "merchant"
+          ]
+        },
+        {
+          "id": "cargo-handoff-rule",
+          "subject": "warehouse",
+          "predicate": "handoff-rule",
+          "value": "货栈保管员核对随货签并登记批次；领取还须收货人明确许可、约定领取数量与确认搬运工具。查问或现场查看不等于获准运走。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "boatman",
+            "keeper",
+            "clerk",
+            "merchant"
+          ]
+        },
+        {
+          "id": "cargo-left-wharf",
+          "subject": "iron-stock",
+          "predicate": "completed-transfer-basis",
+          "value": "这批铁料由陈舟交给沿河货栈，货栈签收了到栈回条；这是正式起点之前已明确的作者设定，不是学徒本轮完成的行动。",
+          "mode": "fixed",
+          "knownBy": [
+            "boatman",
+            "keeper",
+            "clerk"
+          ]
+        },
+        {
+          "id": "missing-at-wharf",
+          "subject": "apprentice",
+          "predicate": "initial-observation",
+          "value": "阿禾按师傅委托来到南码头，原来停放这批铁料的位置已空；他尚未查问去向。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice"
+          ]
+        },
+        {
+          "id": "boatman-location-basis",
+          "subject": "boatman",
+          "predicate": "location-message-basis",
+          "value": "陈舟经手这批铁料的到栈交接，手中留有货栈签收回条；他知道交入货栈，未参与之后的登记核验，不知道本批为何仍被暂扣。",
+          "mode": "fixed",
+          "knownBy": [
+            "boatman"
+          ]
+        },
+        {
+          "id": "smith-location-basis",
+          "subject": "smith",
+          "predicate": "location-message-basis",
+          "value": "林桂从邵宁带来的货栈到栈回条获知铁料已入货栈；回条只有入栈消息，没有领取许可或登记完成证明。",
+          "mode": "fixed",
+          "knownBy": [
+            "smith",
+            "merchant"
+          ]
+        },
+        {
+          "id": "cargo-location",
+          "subject": "iron-stock",
+          "predicate": "location",
+          "value": "warehouse",
+          "mode": "state",
+          "knownBy": [
+            "boatman",
+            "smith",
+            "keeper",
+            "clerk",
+            "merchant"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "cargo-owner",
+          "subject": "iron-stock",
+          "predicate": "owner",
+          "value": "smith",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "boatman",
+            "keeper",
+            "clerk",
+            "merchant"
+          ]
+        },
+        {
+          "id": "cargo-assignment",
+          "subject": "apprentice",
+          "predicate": "assignment",
+          "value": "林桂让阿禾查明这批铁料在哪里、交接为什么还没办完；本次委托不包含自行领取或搬运。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith"
+          ]
+        },
+        {
+          "id": "forge-order",
+          "subject": "forge",
+          "predicate": "order-basis",
+          "value": "邵宁已订下六套农具，并付了订金；客户要拿去准备下一次播种。林桂缺这批铁料，拖延会影响尾款与下一批订单，具体交付日期尚未约定。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "merchant"
+          ]
+        },
+        {
+          "id": "cargo-registration-state",
+          "subject": "iron-stock",
+          "predicate": "registration-state",
+          "value": "pending",
+          "mode": "state",
+          "knownBy": [
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "warehouse",
+            "guild-office"
+          ]
+        },
+        {
+          "id": "cargo-handoff-status",
+          "subject": "iron-stock",
+          "predicate": "handoff-status",
+          "value": "held-awaiting-registration",
+          "mode": "state",
+          "knownBy": [
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "cargo-pickup-permission",
+          "subject": "iron-stock",
+          "predicate": "apprentice-pickup-permission",
+          "value": false,
+          "mode": "state",
+          "knownBy": [
+            "smith",
+            "keeper"
+          ],
+          "observableAt": [
+            "warehouse",
+            "guild-office"
+          ]
+        },
+        {
+          "id": "cargo-seal-status",
+          "subject": "iron-stock",
+          "predicate": "seal-status",
+          "value": "intact",
+          "mode": "state",
+          "knownBy": [
+            "keeper"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "cargo-slip-code",
+          "subject": "iron-stock",
+          "predicate": "shipping-slip-code",
+          "value": "H-17",
+          "mode": "fixed",
+          "knownBy": [
+            "boatman",
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "registry-copy-code",
+          "subject": "iron-stock",
+          "predicate": "office-copy-code",
+          "value": "H-16",
+          "mode": "state",
+          "knownBy": [
+            "clerk"
+          ],
+          "observableAt": [
+            "guild-office"
+          ]
+        },
+        {
+          "id": "registry-copy-origin",
+          "subject": "iron-stock",
+          "predicate": "office-copy-origin",
+          "value": "原始作者秘密：许瑶誊写时沿用了上一批的编号，尚无人确认这是否就是此次暂扣的全部原因；不能从暂扣直接断定舞弊或偷盗。",
+          "mode": "fixed",
+          "knownBy": []
+        },
+        {
+          "id": "iron-quantity",
+          "subject": "iron-stock",
+          "predicate": "quantity",
+          "value": 40,
+          "mode": "state",
+          "knownBy": [
+            "smith",
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "cargo-weight-kg",
+          "subject": "iron-stock",
+          "predicate": "whole-batch-weight-kg",
+          "value": 80,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "boatman",
+            "keeper"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "cargo-transport-tool",
+          "subject": "iron-stock",
+          "predicate": "available-tool",
+          "value": "货栈有一辆可申请使用的两轮手车；可用不等于已给阿禾安排搬运。",
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "boatman",
+            "keeper"
+          ],
+          "observableAt": [
+            "warehouse"
+          ]
+        },
+        {
+          "id": "charcoal-quantity",
+          "subject": "charcoal-stock",
+          "predicate": "quantity",
+          "value": 8,
+          "mode": "state",
+          "knownBy": [
+            "smith",
+            "apprentice"
+          ],
+          "observableAt": [
+            "forge"
+          ]
+        },
+        {
+          "id": "grain-quantity",
+          "subject": "market-grain",
+          "predicate": "quantity",
+          "value": 20,
+          "mode": "state",
+          "knownBy": [
+            "merchant"
+          ],
+          "observableAt": [
+            "market"
+          ]
+        },
+        {
+          "id": "dock-population",
+          "subject": "dock-workers",
+          "predicate": "population",
+          "value": 12,
+          "mode": "state",
+          "knownBy": [
+            "boatman",
+            "keeper"
+          ]
+        },
+        {
+          "id": "guild-staff-population",
+          "subject": "guild-staff",
+          "predicate": "population",
+          "value": 6,
+          "mode": "state",
+          "knownBy": [
+            "keeper",
+            "clerk"
+          ]
+        },
+        {
+          "id": "route-wharf-warehouse",
+          "subject": "route.wharf.warehouse",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "boatman",
+            "keeper"
+          ],
+          "observableAt": [
+            "wharf",
+            "warehouse"
+          ]
+        },
+        {
+          "id": "route-warehouse-wharf",
+          "subject": "route.warehouse.wharf",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "boatman",
+            "keeper"
+          ],
+          "observableAt": [
+            "warehouse",
+            "wharf"
+          ]
+        },
+        {
+          "id": "route-forge-market",
+          "subject": "route.forge.market",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "merchant"
+          ],
+          "observableAt": [
+            "forge",
+            "market"
+          ]
+        },
+        {
+          "id": "route-market-forge",
+          "subject": "route.market.forge",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "merchant"
+          ],
+          "observableAt": [
+            "market",
+            "forge"
+          ]
+        },
+        {
+          "id": "route-market-warehouse",
+          "subject": "route.market.warehouse",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "keeper",
+            "merchant"
+          ],
+          "observableAt": [
+            "market",
+            "warehouse"
+          ]
+        },
+        {
+          "id": "route-warehouse-market",
+          "subject": "route.warehouse.market",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "apprentice",
+            "smith",
+            "keeper",
+            "merchant"
+          ],
+          "observableAt": [
+            "warehouse",
+            "market"
+          ]
+        },
+        {
+          "id": "route-warehouse-office",
+          "subject": "route.warehouse.office",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "warehouse",
+            "guild-office"
+          ]
+        },
+        {
+          "id": "route-office-warehouse",
+          "subject": "route.office.warehouse",
+          "predicate": "usable",
+          "value": true,
+          "mode": "fixed",
+          "knownBy": [
+            "keeper",
+            "clerk"
+          ],
+          "observableAt": [
+            "guild-office",
+            "warehouse"
+          ]
+        },
+        {
+          "id": "clerk-training",
+          "subject": "clerk",
+          "predicate": "verification-training",
+          "value": true,
+          "mode": "state",
+          "knownBy": [
+            "clerk"
+          ],
+          "observableAt": [
+            "guild-office"
+          ]
+        },
+        {
+          "id": "guild-verification-mandate",
+          "subject": "port-guild",
+          "predicate": "verification-mandate",
+          "value": true,
+          "mode": "state",
+          "knownBy": [
+            "clerk"
+          ],
+          "observableAt": [
+            "guild-office"
+          ]
+        },
+        {
+          "id": "clerk-verification-role",
+          "subject": "clerk",
+          "predicate": "verification-role",
+          "value": "unassigned",
+          "mode": "state",
+          "knownBy": [
+            "clerk"
+          ],
+          "observableAt": [
+            "guild-office"
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "id": "river-town",
+          "kind": "region",
+          "name": "河港镇",
+          "attributes": {
+            "source": "原创作者设定",
+            "position": "河湾北岸与石岭南麓之间，东侧货栈接水运，西北铁铺接内陆集市",
+            "historyFactId": "town-origin",
+            "livelihood": "粮船在码头卸货，货栈收保管费，集市向内陆换粮与农具，铁铺用进口铁料和本地木炭修造器具；住宅区住着这些行业的家属。",
+            "placeDescriptions": {
+              "wharf": "低岸的木栈桥连接货船与石阶；粗绳、潮木和回条夹是船工日常用物。",
+              "warehouse": "旧驻粮仓改成的厚墙货栈，内有货架、随货签和保管员登记桌；铁料原箱在这里暂存。",
+              "forge": "石岭道路旁的铁铺，风箱和炭炉面向窄院；林桂在此等料，未完成的农具放在案上。",
+              "guild-office": "货栈东侧的小院保留旧粮仓石门，行会在这里留登记副本并调解交接争执。",
+              "market": "河港与北坡道路的交会处，粮袋、农具和修补摊混在一条石街，商户信用靠熟客和结算维持。",
+              "residences": "北坡较高处的连排小屋，住船工、铁匠和行会员工；低岸涨水时不必随货物一起迁出。"
+            },
+            "clockBoundary": "只定义年100；距离、小时、季节日历及自动资源变化未实现。"
+          },
+          "refs": [
+            "wharf",
+            "warehouse",
+            "forge",
+            "guild-office",
+            "market",
+            "residences",
+            "port-guild",
+            "market-cooperative"
+          ]
+        },
+        {
+          "id": "iron-stock",
+          "kind": "resource",
+          "name": "H-17批铁料",
+          "attributes": {
+            "source": "原创作者设定",
+            "quantityFactId": "iron-quantity",
+            "unit": "块",
+            "use": "供石岭铁铺修造六套订制农具",
+            "locationFactId": "cargo-location",
+            "wholeBatchWeightFactId": "cargo-weight-kg"
+          },
+          "refs": [
+            "warehouse",
+            "forge",
+            "smith"
+          ]
+        },
+        {
+          "id": "charcoal-stock",
+          "kind": "resource",
+          "name": "铁铺木炭",
+          "attributes": {
+            "source": "原创作者设定",
+            "quantityFactId": "charcoal-quantity",
+            "unit": "袋",
+            "use": "来自北坡烧炭户，供风箱炭炉使用；本轮没有自动消耗"
+          },
+          "refs": [
+            "forge",
+            "residences"
+          ]
+        },
+        {
+          "id": "market-grain",
+          "kind": "resource",
+          "name": "集市待售粮袋",
+          "attributes": {
+            "source": "原创作者设定",
+            "quantityFactId": "grain-quantity",
+            "unit": "袋",
+            "use": "由沿河村落运来，供住户与过路商队购买；本轮没有自动买卖"
+          },
+          "refs": [
+            "wharf",
+            "market",
+            "merchant"
+          ]
+        }
+      ]
+    },
+    "people": [
+      {
+        "id": "apprentice",
+        "name": "阿禾",
+        "birthYear": 84,
+        "place": "wharf",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "石岭铁铺学徒",
+          "appearance": "袖口卷起，指背留着几道新旧烫痕，腰上挂着装回条的小布袋",
+          "speechHabit": "先把看到的事说清，遇到熟人会问具体缘由，不擅长争价"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "随林桂学修农具两年，认得码头和集市的常走道路；曾因听岔收货人姓名跑错一趟，所以这回先核实。",
+          "goal": "查明铁料实际去处并现场查看交接状态，弄清师傅为什么仍等不到料；未受命自行领取。",
+          "concern": "怕师傅以为自己又办错事，也担心替货栈作出未经核实的保证。",
+          "knownRoutes": [
+            {
+              "from": "wharf",
+              "to": "warehouse",
+              "evidenceFactId": "route-wharf-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "wharf",
+              "evidenceFactId": "route-warehouse-wharf"
+            },
+            {
+              "from": "warehouse",
+              "to": "market",
+              "evidenceFactId": "route-warehouse-market"
+            },
+            {
+              "from": "market",
+              "to": "warehouse",
+              "evidenceFactId": "route-market-warehouse"
+            },
+            {
+              "from": "market",
+              "to": "forge",
+              "evidenceFactId": "route-market-forge"
+            },
+            {
+              "from": "forge",
+              "to": "market",
+              "evidenceFactId": "route-forge-market"
+            }
+          ]
+        }
+      },
+      {
+        "id": "smith",
+        "name": "林桂",
+        "birthYear": 62,
+        "place": "forge",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "石岭铁铺铁匠",
+          "appearance": "围裙上有烧孔，右手虎口厚硬，等人时习惯擦一遍已经干净的锤柄",
+          "speechHabit": "问话短，先问能否开工，再问出了什么岔子"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "接手铁铺后一直靠熟客订金周转；邵宁的六套农具关系下一批村中客户是否继续下单。",
+          "goal": "核实这批铁料仍不能交接的情况，争取尽快开工，但尚未决定领多少或派谁搬。",
+          "concern": "不愿当着学徒承认手头周转吃紧；怕货栈一句再等等，让自己丢掉商户的信任。",
+          "knownRoutes": [
+            {
+              "from": "forge",
+              "to": "market",
+              "evidenceFactId": "route-forge-market"
+            },
+            {
+              "from": "market",
+              "to": "forge",
+              "evidenceFactId": "route-market-forge"
+            },
+            {
+              "from": "market",
+              "to": "warehouse",
+              "evidenceFactId": "route-market-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "market",
+              "evidenceFactId": "route-warehouse-market"
+            }
+          ]
+        }
+      },
+      {
+        "id": "keeper",
+        "name": "沈砚",
+        "birthYear": 70,
+        "place": "warehouse",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "货栈保管员",
+          "groupId": "guild-staff",
+          "appearance": "上衣肘部磨白，胸前别着登记用的短笔，手上有铁料搬运留下的锈色",
+          "speechHabit": "先答货在不在，再说明手续差哪一项"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "曾为一宗口头放货争执补赔保管费；现在不凭熟人情面省去交接登记。",
+          "goal": "把本批随货签与登记资料核对清楚，不让行会追究自己擅自放货，也不想白占铁铺的用料。",
+          "concern": "货主嫌他磨蹭，登记员又怕他越权；他宁愿说明暂扣缘由，也不愿保证未核实的副本。",
+          "knownRoutes": [
+            {
+              "from": "warehouse",
+              "to": "guild-office",
+              "evidenceFactId": "route-warehouse-office"
+            },
+            {
+              "from": "guild-office",
+              "to": "warehouse",
+              "evidenceFactId": "route-office-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "wharf",
+              "evidenceFactId": "route-warehouse-wharf"
+            },
+            {
+              "from": "wharf",
+              "to": "warehouse",
+              "evidenceFactId": "route-wharf-warehouse"
+            }
+          ],
+          "responsePolicy": {
+            "goalId": "register-verified-copy",
+            "goal": "收到登记员消息后按本人规则办理本批登记，仍不代替货主许可",
+            "rules": [
+              {
+                "id": "register-matched-copy",
+                "priority": 10,
+                "when": {
+                  "factId": "registry-copy-code",
+                  "equals": "H-17"
+                },
+                "conditions": [
+                  {
+                    "factId": "cargo-slip-code",
+                    "equals": "H-17"
+                  },
+                  {
+                    "factId": "cargo-registration-state",
+                    "equals": "pending"
+                  },
+                  {
+                    "factId": "cargo-handoff-status",
+                    "equals": "held-awaiting-registration"
+                  }
+                ],
+                "stateChanges": [
+                  {
+                    "factId": "cargo-registration-state",
+                    "expectedValue": "pending",
+                    "value": "registered"
+                  },
+                  {
+                    "factId": "cargo-handoff-status",
+                    "expectedValue": "held-awaiting-registration",
+                    "value": "registered-awaiting-permission"
+                  }
+                ],
+                "shareFactIds": [
+                  "cargo-registration-state",
+                  "cargo-handoff-status"
+                ],
+                "relationshipValue": "愿意依据登记员提供的本批结果办理登记",
+                "description": "本人持有的随货签与收到的副本结果相符，办理登记并同步交接阶段；实际真值前提与全部效果由内核核对"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "clerk",
+        "name": "许瑶",
+        "birthYear": 75,
+        "place": "guild-office",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "行会登记员",
+          "groupId": "guild-staff",
+          "appearance": "指侧常沾墨，发带系得很紧，翻账页时总先按住页角",
+          "speechHabit": "先讲登记记录，再指出仍需复核的部分"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "新近负责登记副本，靠这份工钱养家；已发现副本编号与随货签对不上，但还没有确认差错出在哪里。",
+          "goal": "查清H-16副本与H-17随货签的差异，改错要留下依据，不能把责任含糊推给船工。",
+          "concern": "怕被当作故意压货，也怕自己急着改账后反而无法解释原记录。",
+          "knownRoutes": [
+            {
+              "from": "guild-office",
+              "to": "warehouse",
+              "evidenceFactId": "route-office-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "guild-office",
+              "evidenceFactId": "route-warehouse-office"
+            }
+          ],
+          "responsePolicy": {
+            "goalId": "verify-office-copy",
+            "goal": "收到保管员带来的随货签消息后按明确资格核对副本",
+            "rules": [
+              {
+                "id": "standard-copy-correction",
+                "priority": 1,
+                "when": {
+                  "factId": "cargo-slip-code",
+                  "equals": "H-17"
+                },
+                "conditions": [
+                  {
+                    "factId": "clerk-verification-role",
+                    "equals": "registrar"
+                  }
+                ],
+                "stateChanges": [
+                  {
+                    "factId": "registry-copy-code",
+                    "expectedValue": "H-16",
+                    "value": "H-17"
+                  }
+                ],
+                "shareFactIds": [
+                  "registry-copy-code"
+                ],
+                "relationshipValue": "按普通核验规则交回结果",
+                "description": "作者明确给定的普通候选；仅校正本批副本，不推断故意扣货"
+              },
+              {
+                "id": "qualified-copy-correction",
+                "priority": 20,
+                "when": {
+                  "factId": "cargo-slip-code",
+                  "equals": "H-17"
+                },
+                "conditions": [
+                  {
+                    "factId": "clerk-verification-role",
+                    "equals": "registrar"
+                  },
+                  {
+                    "factId": "clerk-training",
+                    "equals": true
+                  },
+                  {
+                    "factId": "guild-verification-mandate",
+                    "equals": true
+                  }
+                ],
+                "stateChanges": [
+                  {
+                    "factId": "registry-copy-code",
+                    "expectedValue": "H-16",
+                    "value": "H-17"
+                  }
+                ],
+                "shareFactIds": [
+                  "registry-copy-code"
+                ],
+                "relationshipValue": "愿意向保管员交代本次核验结果",
+                "description": "收到随货签消息，凭本人持有的核验资格与依据校正副本，现场看过后交回结果；不是自动认定责任"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "merchant",
+        "name": "邵宁",
+        "birthYear": 73,
+        "place": "market",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "粮货与农具商人",
+          "appearance": "穿一件洗旧的深褐背心，算盘包上缝着两个不同颜色的补丁",
+          "speechHabit": "谈买卖先说明自己的承诺，催人时仍留下一句商量余地"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "替沿河村民合订六套农具，自己先付了订金；粮袋可以买卖周转，但不够让农具订单一直拖着。",
+          "goal": "拿到有根据的开工消息，好向订货村民交代；若铁料已到而只是缺手续，就想协调而非立刻换铁铺。",
+          "concern": "不愿做逼老熟客的坏人，可空口替林桂保证也会损自己的信用。",
+          "knownRoutes": [
+            {
+              "from": "market",
+              "to": "forge",
+              "evidenceFactId": "route-market-forge"
+            },
+            {
+              "from": "forge",
+              "to": "market",
+              "evidenceFactId": "route-forge-market"
+            },
+            {
+              "from": "market",
+              "to": "warehouse",
+              "evidenceFactId": "route-market-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "market",
+              "evidenceFactId": "route-warehouse-market"
+            }
+          ]
+        }
+      }
+    ],
+    "factions": [
+      {
+        "id": "port-guild",
+        "name": "河港行会",
+        "attributes": {
+          "source": "原创作者设定",
+          "role": "管理成员的货栈保管与交接登记，留存副本并调解争执",
+          "interest": "可靠账目使船队继续在此交货，手续费维持登记与保管岗位",
+          "authorityBoundary": "有登记和成员保管约定，没有凭此自动审判全镇人物的权力",
+          "institutionFactId": "cargo-handoff-rule"
+        },
+        "refs": [
+          "guild-office",
+          "warehouse",
+          "keeper",
+          "clerk",
+          "guild-staff"
+        ]
+      },
+      {
+        "id": "market-cooperative",
+        "name": "集市商户联合",
+        "attributes": {
+          "source": "原创作者设定",
+          "role": "合并零散农具订单与粮货转卖，凭熟客信用协商交付",
+          "interest": "货物和农具按承诺结算，避免本地商户被船队与登记成本挤压",
+          "authorityBoundary": "能协商订单和催办，不可代货主发领取许可"
+        },
+        "refs": [
+          "market",
+          "forge",
+          "merchant",
+          "smith",
+          "market-grain"
+        ]
+      }
+    ],
+    "groups": [
+      {
+        "id": "dock-workers",
+        "name": "河港船工与搬运工",
+        "populationFactId": "dock-population",
+        "attributes": {
+          "source": "原创作者设定",
+          "livelihood": "靠卸货、搬运与到栈交接挣工钱",
+          "boundary": "总人数12，当前只展开陈舟，其余成员没有自动行动与私人经历"
+        },
+        "refs": [
+          "wharf",
+          "warehouse",
+          "port-guild"
+        ]
+      },
+      {
+        "id": "guild-staff",
+        "name": "行会登记与货栈员工",
+        "populationFactId": "guild-staff-population",
+        "attributes": {
+          "source": "原创作者设定",
+          "livelihood": "由保管费与登记费支付工钱",
+          "boundary": "总人数6，当前展开沈砚与许瑶，其余成员不凭空出场"
+        },
+        "refs": [
+          "warehouse",
+          "guild-office",
+          "keeper",
+          "clerk",
+          "port-guild"
+        ]
+      }
+    ],
+    "extras": [
+      {
+        "id": "boatman",
+        "name": "陈舟",
+        "birthYear": 68,
+        "place": "wharf",
+        "groupId": "dock-workers",
+        "publicProfile": {
+          "source": "原创作者设定",
+          "occupation": "接货船工",
+          "appearance": "晒黑的肩颈搭着旧布巾，回条夹夹在腰带里",
+          "speechHabit": "只答自己经手的交接，没看见的事会说不知道"
+        },
+        "privateProfile": {
+          "source": "原创作者设定",
+          "background": "负责把本批铁料从南码头交到货栈，取回签收回条后回码头等下一份工。",
+          "goal": "结清这趟交接工钱，腾出收入给家里买药；不愿被无凭据的丢货指责拖住。",
+          "concern": "知道货到了货栈，却不能替货栈保证已办完登记；家里的病情不向阿禾自动公开。",
+          "knownRoutes": [
+            {
+              "from": "wharf",
+              "to": "warehouse",
+              "evidenceFactId": "route-wharf-warehouse"
+            },
+            {
+              "from": "warehouse",
+              "to": "wharf",
+              "evidenceFactId": "route-warehouse-wharf"
+            }
+          ]
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "from": "apprentice",
+        "to": "smith",
+        "value": "敬重但怕再办错差事的师徒",
+        "basis": "原创作者设定：阿禾在林桂店里学修农具两年，曾听岔一次收货人，这次收到的是查明委托。"
+      },
+      {
+        "from": "smith",
+        "to": "apprentice",
+        "value": "愿意培养但尚未交付独立领货的学徒",
+        "basis": "原创作者设定：林桂教他锻修，也承担订单风险；本次只让他问清情况。"
+      },
+      {
+        "from": "apprentice",
+        "to": "boatman",
+        "value": "以前随师傅交接见过的船工",
+        "basis": "原创作者设定：陈舟多次经手铁铺的到栈回条，阿禾只知道他做交接，不知道他家里的病事。"
+      },
+      {
+        "from": "keeper",
+        "to": "apprentice",
+        "value": "只按行会手续接待",
+        "basis": "原创作者设定：沈砚认识铁铺学徒的身份，但林桂尚未授权其独立领取。"
+      },
+      {
+        "from": "smith",
+        "to": "merchant",
+        "value": "互相信任但受交货承诺牵制的熟客",
+        "basis": "原创作者设定：邵宁付了六套农具的订金，林桂希望保住后续订单，也知道邵宁要向村民交代。"
+      },
+      {
+        "from": "merchant",
+        "to": "smith",
+        "value": "愿意协调但不能无限替其担保",
+        "basis": "原创作者设定：农具质量一向可靠，周转和交付压力却由两人共同承受。"
+      },
+      {
+        "from": "keeper",
+        "to": "clerk",
+        "value": "互相依赖登记凭据但担心替对方担责",
+        "basis": "原创作者设定：货栈保管和行会副本分工，任一方省略记录都会使另一方解释不清。"
+      },
+      {
+        "from": "clerk",
+        "to": "keeper",
+        "value": "需要其核对原始随货签的同事",
+        "basis": "原创作者设定：许瑶发现编号不一致，需要沈砚保留原件，并不等于她已确认是谁造成差错。"
+      },
+      {
+        "from": "boatman",
+        "to": "keeper",
+        "value": "凭签收回条交工钱的交接伙伴",
+        "basis": "原创作者设定：陈舟把料交入货栈，沈砚签了到栈回条；登记核验是后续另一项工作。"
+      }
+    ],
+    "emotions": [
+      {
+        "personId": "apprentice",
+        "feeling": "有点慌，仍想先问清楚",
+        "trigger": "原创作者设定：missing-at-wharf与cargo-assignment均是本人已知依据；不把着急等同于获准搬运。"
+      },
+      {
+        "personId": "smith",
+        "feeling": "焦躁又不愿显出窘迫",
+        "trigger": "原创作者设定：本人已知forge-order与到栈消息，料却未交到铁铺；收入周转属于本人私密。"
+      },
+      {
+        "personId": "keeper",
+        "feeling": "谨慎，有被两边催逼的压力",
+        "trigger": "原创作者设定：本人知道暂扣与待登记状态，过去承担口头放货损失的经历使他不肯省略手续。"
+      },
+      {
+        "personId": "clerk",
+        "feeling": "担心差错，也想把依据查清",
+        "trigger": "原创作者设定：本人知道registry-copy-code与cargo-slip-code不一致，尚未得到差错原因的本人知识。"
+      },
+      {
+        "personId": "merchant",
+        "feeling": "为难但仍愿意协调",
+        "trigger": "原创作者设定：本人知道forge-order，催铁铺会伤熟客情面，空口保证又会损自己的商誉。"
+      },
+      {
+        "personId": "boatman",
+        "feeling": "牵挂家人，怕交接费被拖住",
+        "trigger": "原创作者设定：来自本人私密的买药需要；别人看到他的回条，不能自动知道家事。"
+      }
+    ],
+    "laws": [
+      {
+        "id": "iron-nonnegative",
+        "kind": "range",
+        "factId": "iron-quantity",
+        "min": 0
+      },
+      {
+        "id": "charcoal-nonnegative",
+        "kind": "range",
+        "factId": "charcoal-quantity",
+        "min": 0
+      },
+      {
+        "id": "grain-nonnegative",
+        "kind": "range",
+        "factId": "grain-quantity",
+        "min": 0
+      },
+      {
+        "id": "dock-count-nonnegative",
+        "kind": "range",
+        "factId": "dock-population",
+        "min": 0
+      },
+      {
+        "id": "staff-count-nonnegative",
+        "kind": "range",
+        "factId": "guild-staff-population",
+        "min": 0
+      },
+      {
+        "id": "cargo-place-domain",
+        "kind": "oneOf",
+        "factId": "cargo-location",
+        "values": [
+          "wharf",
+          "warehouse",
+          "forge"
+        ]
+      },
+      {
+        "id": "registration-domain",
+        "kind": "oneOf",
+        "factId": "cargo-registration-state",
+        "values": [
+          "pending",
+          "registered"
+        ]
+      },
+      {
+        "id": "handoff-domain",
+        "kind": "oneOf",
+        "factId": "cargo-handoff-status",
+        "values": [
+          "held-awaiting-registration",
+          "registered-awaiting-permission",
+          "released"
+        ]
+      },
+      {
+        "id": "pickup-permission-domain",
+        "kind": "oneOf",
+        "factId": "cargo-pickup-permission",
+        "values": [
+          false,
+          true
+        ]
+      },
+      {
+        "id": "seal-domain",
+        "kind": "oneOf",
+        "factId": "cargo-seal-status",
+        "values": [
+          "intact",
+          "broken"
+        ]
+      },
+      {
+        "id": "write-cargo-location",
+        "kind": "writeAccess",
+        "factId": "cargo-location",
+        "actors": [
+          "keeper"
+        ]
+      },
+      {
+        "id": "write-cargo-registration-state",
+        "kind": "writeAccess",
+        "factId": "cargo-registration-state",
+        "actors": [
+          "keeper",
+          "clerk"
+        ]
+      },
+      {
+        "id": "write-cargo-handoff-status",
+        "kind": "writeAccess",
+        "factId": "cargo-handoff-status",
+        "actors": [
+          "keeper",
+          "clerk"
+        ]
+      },
+      {
+        "id": "write-cargo-pickup-permission",
+        "kind": "writeAccess",
+        "factId": "cargo-pickup-permission",
+        "actors": [
+          "smith"
+        ]
+      },
+      {
+        "id": "write-cargo-seal-status",
+        "kind": "writeAccess",
+        "factId": "cargo-seal-status",
+        "actors": [
+          "keeper"
+        ]
+      },
+      {
+        "id": "write-registry-copy-code",
+        "kind": "writeAccess",
+        "factId": "registry-copy-code",
+        "actors": [
+          "clerk"
+        ]
+      },
+      {
+        "id": "write-iron-quantity",
+        "kind": "writeAccess",
+        "factId": "iron-quantity",
+        "actors": [
+          "keeper"
+        ]
+      },
+      {
+        "id": "write-charcoal-quantity",
+        "kind": "writeAccess",
+        "factId": "charcoal-quantity",
+        "actors": [
+          "smith"
+        ]
+      },
+      {
+        "id": "write-grain-quantity",
+        "kind": "writeAccess",
+        "factId": "grain-quantity",
+        "actors": [
+          "merchant"
+        ]
+      },
+      {
+        "id": "write-dock-population",
+        "kind": "writeAccess",
+        "factId": "dock-population",
+        "actors": []
+      },
+      {
+        "id": "write-guild-staff-population",
+        "kind": "writeAccess",
+        "factId": "guild-staff-population",
+        "actors": []
+      },
+      {
+        "id": "write-clerk-training",
+        "kind": "writeAccess",
+        "factId": "clerk-training",
+        "actors": []
+      },
+      {
+        "id": "write-guild-verification-mandate",
+        "kind": "writeAccess",
+        "factId": "guild-verification-mandate",
+        "actors": []
+      },
+      {
+        "id": "write-clerk-verification-role",
+        "kind": "writeAccess",
+        "factId": "clerk-verification-role",
+        "actors": []
+      },
+      {
+        "id": "clerk-role-domain",
+        "kind": "oneOf",
+        "factId": "clerk-verification-role",
+        "values": [
+          "unassigned",
+          "registrar"
+        ]
+      },
+      {
+        "id": "role-assignment-basis",
+        "kind": "changeRequires",
+        "factId": "clerk-verification-role",
+        "whenEquals": "registrar",
+        "conditions": [
+          {
+            "factId": "clerk-training",
+            "equals": true
+          },
+          {
+            "factId": "guild-verification-mandate",
+            "equals": true
+          }
+        ]
+      },
+      {
+        "id": "copy-correction-requires-qualified-actor",
+        "kind": "changeRequires",
+        "factId": "registry-copy-code",
+        "conditions": [
+          {
+            "factId": "clerk-training",
+            "equals": true
+          }
+        ],
+        "actorCondition": {
+          "predicate": "verification-role",
+          "equals": "registrar"
+        }
+      },
+      {
+        "id": "registration-requires-matched-copy",
+        "kind": "changeRequires",
+        "factId": "cargo-registration-state",
+        "whenEquals": "registered",
+        "conditions": [
+          {
+            "factId": "registry-copy-code",
+            "equals": "H-17"
+          },
+          {
+            "factId": "cargo-slip-code",
+            "equals": "H-17"
+          }
+        ]
+      },
+      {
+        "id": "handoff-stage-requires-matched-copy",
+        "kind": "changeRequires",
+        "factId": "cargo-handoff-status",
+        "whenEquals": "registered-awaiting-permission",
+        "conditions": [
+          {
+            "factId": "registry-copy-code",
+            "equals": "H-17"
+          },
+          {
+            "factId": "cargo-slip-code",
+            "equals": "H-17"
+          }
+        ]
+      }
+    ]
+  }
+}

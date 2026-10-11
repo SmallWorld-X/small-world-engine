@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "keeper-brings-slip-to-office",
+  "expectedRevision": 1,
+  "actor": "keeper",
+  "to": "guild-office"
+}

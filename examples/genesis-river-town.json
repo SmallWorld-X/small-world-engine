@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "title": "河港镇：查明铁料下落",
+  "idea": "阿禾是石岭铁铺的学徒。清晨他发现码头原处没有铁料箱，想先问清下落，再决定是否取回。人物尚未行动，取货与运送不是已经发生的结果。",
+  "unresolved": [
+    "铁料箱为何从码头转到货栈，尚无已确认经历。",
+    "陈舟知道货箱当前在货栈，但这条认识的具体取得过程尚未补齐。",
+    "阿禾是否已听过师傅今日交货的期限，尚未确认。",
+    "货箱重量、可用搬运工具和货主是否允许取货，须在决定搬运前补齐。",
+    "人物是否熟悉每条路线尚未确认；客观道路存在不等于人物已经知道怎么走。",
+    "情感条目只是作者提供的初始感受及触发依据，当前没有心理变化或自动行动推导。"
+  ],
+  "sections": {
+    "world": {
+      "places": [
+        {"id": "wharf", "name": "南码头"},
+        {"id": "warehouse", "name": "沿河货栈"},
+        {"id": "forge", "name": "石岭铁铺"}
+      ],
+      "routes": [
+        {"from": "wharf", "to": "warehouse"},
+        {"from": "warehouse", "to": "wharf"},
+        {"from": "warehouse", "to": "forge"},
+        {"from": "forge", "to": "warehouse"}
+      ],
+      "facts": [
+        {"id": "town-origin", "subject": "river-region", "predicate": "origin", "value": "南有河港、北接石岭；旧时驻军与往来商人逐渐形成街市", "mode": "fixed", "knownBy": []},
+        {"id": "missing-at-dawn", "subject": "iron-stock", "predicate": "wharf-observation-at-dawn", "value": "阿禾清晨来到码头时，原处已经没有铁料箱", "mode": "fixed", "knownBy": ["apprentice"]},
+        {"id": "cargo-location", "subject": "iron-stock", "predicate": "location", "value": "warehouse", "mode": "state", "knownBy": ["boatman"], "observableAt": ["warehouse", "forge"]},
+        {"id": "iron-quantity", "subject": "iron-stock", "predicate": "quantity", "value": 40, "mode": "state", "knownBy": ["boatman", "smith"], "observableAt": ["warehouse", "forge"]},
+        {"id": "dock-population", "subject": "dock-workers", "predicate": "population", "value": 12, "mode": "state", "knownBy": ["boatman"]}
+      ],
+      "entities": [
+        {"id": "river-region", "kind": "region", "name": "河港镇", "attributes": {"position": "河港与石岭之间", "livelihood": "河运交接、货栈和农具修造维持镇上日常买卖", "source": "本示例的作者设定，未使用模型或外部史料"}, "refs": ["wharf", "warehouse", "forge"]},
+        {"id": "iron-stock", "kind": "resource", "name": "待交接的铁料", "attributes": {"quantityFactId": "iron-quantity", "unit": "示例计量单位；重量尚未确定", "use": "供石岭铁铺修造农具", "source": "本示例的作者设定"}, "refs": ["warehouse", "forge"]}
+      ]
+    },
+    "people": [
+      {"id": "apprentice", "name": "阿禾", "place": "wharf", "publicProfile": {"occupation": "铁铺学徒", "age": 19, "appearance": "袖口卷起，手背留着新旧不一的烫痕"}, "privateProfile": {"concern": "怕误了送货，又不敢独自同货主争执", "intent": "先查明铁料箱下落，取货方式仍待决定"}},
+      {"id": "boatman", "name": "陈舟", "place": "wharf", "publicProfile": {"occupation": "船工", "age": null, "appearance": "肤色晒得发黑，肩上搭着一条旧布巾"}, "privateProfile": {"concern": "家中有人生病，急着办完交接"}},
+      {"id": "smith", "name": "林桂", "place": "forge", "publicProfile": {"occupation": "铁匠", "age": null, "appearance": "围裙上有烧灼的小孔，手掌粗厚"}, "privateProfile": {"concern": "今日交货需要那箱铁料"}}
+    ],
+    "factions": [
+      {"id": "port-guild", "name": "河港行会", "attributes": {"role": "登记本地货栈和船工的交接事务", "source": "作者设定；权限边界和规章仍未展开"}, "refs": ["warehouse", "boatman"]}
+    ],
+    "groups": [
+      {"id": "dock-workers", "name": "河港搬运工", "populationFactId": "dock-population", "attributes": {"livelihood": "替靠岸货船和沿河货栈搬运货物", "source": "总人数是作者设定；其余成员未展开"}, "refs": ["wharf", "warehouse"]}
+    ],
+    "extras": [
+      {"id": "porter", "name": "许顺", "place": "warehouse", "groupId": "dock-workers", "publicProfile": {"occupation": "搬运工", "age": null, "appearance": "腰上系着粗绳，右腿裤脚缝着一块补丁"}, "privateProfile": {"concern": "这一趟结清工钱后再接下一单"}}
+    ],
+    "relationships": [
+      {"from": "apprentice", "to": "boatman", "value": "只在交接时见过几面", "basis": "阿禾以前随师傅来码头取料，陈舟经手过交接；这不等于阿禾知道陈舟家中的私事。"},
+      {"from": "apprentice", "to": "smith", "value": "师徒", "basis": "阿禾在林桂的铁铺学习修造农具，当前担任铁料交接跑腿。"}
+    ],
+    "emotions": [
+      {"personId": "apprentice", "feeling": "焦虑", "trigger": "missing-at-dawn 是阿禾已知的清晨观察；他担心误送货，但尚未决定下一步。"},
+      {"personId": "boatman", "feeling": "牵挂", "trigger": "本人私密资料记载家中有人生病；这条初始感受不向阿禾公开。"}
+    ],
+    "laws": [
+      {"id": "iron-quantity-bound", "kind": "range", "factId": "iron-quantity", "min": 0, "max": 100},
+      {"id": "cargo-location-domain", "kind": "oneOf", "factId": "cargo-location", "values": ["wharf", "warehouse", "forge"]}
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "worldId": "message-reaction-river-town",
+  "requestId": "reaction-apprentice-check",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "intent": "原创作者设定：按师傅的查明委托，先问铁料实际所在，再到现场观察交接状态；不自行领取或声称铁料已送到。",
+  "scenario": {
+    "goal": {
+      "id": "apprentice-check-handoff",
+      "kind": "observeLocatedFact",
+      "factId": "cargo-handoff-status",
+      "locationFactId": "cargo-location",
+      "label": "找到铁料所在货栈并现场观察交接状态"
+    },
+    "remainingGaps": [
+      "地点消息来自有回条依据的船工；本轮现场目标观察交接状态，不把听到地点当作取得货物。",
+      "这批货仍需登记核验和货主明确的领取许可；运送数量尚未选择。",
+      "本轮尚未核对随货签与登记资料；不得从暂扣推断差错或偷盗。"
+    ]
+  },
+  "components": [
+    {
+      "stage": "prepare",
+      "id": "knowledge-goal-preparation",
+      "version": "1"
+    },
+    {
+      "stage": "candidates",
+      "id": "knowledge-goal-candidates",
+      "version": "1"
+    },
+    {
+      "stage": "select",
+      "id": "knowledge-goal-selection",
+      "version": "1"
+    },
+    {
+      "stage": "resolve",
+      "id": "knowledge-goal-action",
+      "version": "1"
+    },
+    {
+      "stage": "feedback",
+      "id": "knowledge-goal-feedback",
+      "version": "1"
+    }
+  ]
+}

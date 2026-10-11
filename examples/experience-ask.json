@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "requestId": "apprentice-asks-first-location",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "intent": "阿禾先向同地且有交接关系的陈舟询问铁料箱下落；没有取货许可时不把询问写成取回货箱。",
+  "components": [
+    {"stage": "prepare", "id": "declared-preparation", "version": "1"},
+    {"stage": "candidates", "id": "declared-candidates", "version": "1"},
+    {"stage": "select", "id": "priority-selection", "version": "1"},
+    {"stage": "resolve", "id": "selected-action", "version": "1"},
+    {"stage": "feedback", "id": "actual-feedback", "version": "1"}
+  ],
+  "scenario": {
+    "requiredEvidence": [
+      {"path": "/self/privateProfile/intent", "label": "阿禾已有查明铁料下落的本人意图"},
+      {"path": "/nearby/0/id", "label": "陈舟在阿禾当前所见的同一地点", "equals": "boatman"},
+      {"path": "/relationships/0/to", "label": "阿禾与陈舟已有交接关系", "equals": "boatman"}
+    ],
+    "candidates": [
+      {
+        "id": "ask-boatman",
+        "module": "ask",
+        "arguments": {"target": "boatman", "factId": "cargo-location"},
+        "description": "先问陈舟货箱在哪里，答案只是来自陈舟的认识，不等于现场确认或完成运送。",
+        "priority": 1,
+        "evidence": [
+          {"path": "/nearby/0/id", "label": "询问对象确实在同地", "equals": "boatman"},
+          {"path": "/relationships/0/to", "label": "已有交接关系支持先开口询问", "equals": "boatman"}
+        ]
+      }
+    ],
+    "remainingGaps": [
+      "陈舟的消息仍可能是旧认识；货箱位置可在现场观察后再核对。",
+      "货主是否允许取货、运输重量和工具尚未补齐；本次不自动推进取货或运送。"
+    ]
+  }
+}

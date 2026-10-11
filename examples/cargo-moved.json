@@ -1,0 +1,1 @@
+{"schemaVersion":1,"worldId":"river-town","requestId":"cargo-moved","expectedRevision":2,"actor":"@author","reason":"货栈完成交接，将铁料送到石岭铁铺；本例结果由作者明确输入，尚未模拟搬运过程","effects":[{"type":"fact.change","factId":"cargo-location","expectedValue":"warehouse","value":"forge"}]}

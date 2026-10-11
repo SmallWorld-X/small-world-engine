@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "worldId": "time-town",
+  "requestId": "time-forward-ten-years",
+  "expectedRevision": 0,
+  "actor": "@author",
+  "reason": "将整个世界从纪年100年统一推进到110年；不自动改变职业、位置、情绪或关系，也不补造十年经历。",
+  "effects": [
+    {"type": "time.advance", "expectedYear": 100, "toYear": 110}
+  ]
+}

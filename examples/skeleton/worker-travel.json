@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "worker-returns-wharf",
+  "expectedRevision": 4,
+  "actor": "new-porter",
+  "to": "wharf"
+}

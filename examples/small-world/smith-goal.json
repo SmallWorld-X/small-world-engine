@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "worldId": "small-world-river-town",
+  "requestId": "small-world-smith-first",
+  "expectedRevision": 0,
+  "actor": "smith",
+  "intent": "原创作者设定：铁铺缺料并承担六套农具订单的压力，林桂凭自己收到的到栈回条消息和熟悉的集市道路，到货栈核实交接状态；不借用学徒私密，也未决定运送数量。",
+  "scenario": {
+    "goal": {"id": "smith-check-handoff", "kind": "observeLocatedFact", "factId": "cargo-handoff-status", "locationFactId": "cargo-location", "label": "独立核实铁铺正在等待的这批铁料交接情况"},
+    "remainingGaps": [
+      "本人知道当前未授权阿禾领取，尚无登记完成证明；到栈消息不能替代这些条件。",
+      "沿forge到market再到warehouse的本人已知路线逐段走，不虚构铁铺直达货栈的道路。",
+      "核实之后如何回应订单、领多少、由谁搬仍是后续选择，本目标不把货运到铁铺。"
+    ]
+  },
+  "components": [
+    {"stage": "prepare", "id": "knowledge-goal-preparation", "version": "1"},
+    {"stage": "candidates", "id": "knowledge-goal-candidates", "version": "1"},
+    {"stage": "select", "id": "knowledge-goal-selection", "version": "1"},
+    {"stage": "resolve", "id": "knowledge-goal-action", "version": "1"},
+    {"stage": "feedback", "id": "knowledge-goal-feedback", "version": "1"}
+  ]
+}

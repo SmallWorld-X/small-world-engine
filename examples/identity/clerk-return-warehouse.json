@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "clerk-returns-with-copy-result",
+  "expectedRevision": 4,
+  "actor": "clerk",
+  "to": "warehouse"
+}

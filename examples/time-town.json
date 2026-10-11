@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "worldId": "time-town",
+  "title": "同一个世界里的十年",
+  "idea": "从三个人的已确认起点验证共同时间、年龄与关系历史；时间流逝不替他们编造经历。",
+  "unresolved": [
+    "陈川在西岭村的具体生活及这十年的经历尚未展开；他仍与其他人物处在同一世界时间。",
+    "十年后的职业、心情和所在地变化没有由时间流逝自动推导；初始形象和私密资料保留其记录年份。",
+    "后续同学关系来自作者另一次明确提交；不表示已经演出离职、入学或完整十年生活。"
+  ],
+  "sections": {
+    "world": {
+      "worldTime": {"unit": "year", "year": 100},
+      "places": [
+        {"id": "xu-house", "name": "北城许家院落"},
+        {"id": "academy", "name": "北城学堂"},
+        {"id": "remote-village", "name": "西岭村（内部街巷尚未展开）"}
+      ],
+      "routes": [
+        {"from": "xu-house", "to": "academy"},
+        {"from": "academy", "to": "xu-house"}
+      ],
+      "facts": [
+        {"id": "north-city-position", "subject": "north-city", "predicate": "position", "value": "帝国中部偏北的河港商路旁", "mode": "fixed", "knownBy": ["zhou-ning", "xu-cheng"]},
+        {"id": "academy-in-city", "subject": "academy", "predicate": "within", "value": "north-city", "mode": "fixed", "knownBy": ["zhou-ning", "xu-cheng"]},
+        {"id": "house-in-city", "subject": "xu-house", "predicate": "within", "value": "north-city", "mode": "fixed", "knownBy": ["zhou-ning", "xu-cheng"]},
+        {"id": "village-position", "subject": "remote-village", "predicate": "position", "value": "北城西边的山岭外", "mode": "fixed", "knownBy": ["chen-chuan"]},
+        {"id": "house-background", "subject": "xu-house", "predicate": "background", "value": "纪年100年前，许家已在北城经营布匹买卖。", "mode": "fixed", "knownBy": ["zhou-ning", "xu-cheng"]}
+      ]
+    },
+    "people": [
+      {
+        "id": "zhou-ning",
+        "name": "周宁",
+        "birthYear": 84,
+        "place": "xu-house",
+        "publicProfile": {"occupation": "许家杂务仆人", "appearance": "身形清瘦，穿着袖口磨白的短褂"},
+        "privateProfile": {"concern": "不愿旧身份一直限制自己", "privateMemory": "小时候曾偷偷向账房借书；这段记忆没有告诉许澄。"}
+      },
+      {
+        "id": "xu-cheng",
+        "name": "许澄",
+        "birthYear": 84,
+        "place": "xu-house",
+        "publicProfile": {"occupation": "许家晚辈", "appearance": "衣领整齐，腰间挂着一只细布书袋"},
+        "privateProfile": {"concern": "想凭自己的本事取得入学资格", "privateMemory": "曾把未交出的文章藏在箱底；其他人没有看过。"}
+      },
+      {
+        "id": "chen-chuan",
+        "name": "陈川",
+        "birthYear": 78,
+        "place": "remote-village",
+        "publicProfile": {"description": "西岭村的一名居民；具体形象与生活尚未展开。"},
+        "privateProfile": {"preparationNote": "只有粗略身份与出生年已确认；未编造其职业、心情、旧相识或未来去向。"}
+      }
+    ],
+    "relationships": [
+      {"from": "zhou-ning", "to": "xu-cheng", "value": "主人家的晚辈", "basis": "作者确认纪年100年的起点：周宁在许家做杂务，许澄是家中晚辈；这项角色关系不代表周宁知道许澄的私事。"},
+      {"from": "xu-cheng", "to": "zhou-ning", "value": "家中仆人", "basis": "作者确认纪年100年的起点：许澄认识在家中做杂务的周宁；这项角色关系不代替两人的感情或相互信任。"}
+    ]
+  }
+}

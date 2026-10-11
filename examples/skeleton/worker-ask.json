@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "worldId": "skeleton-river-town",
+  "requestId": "worker-asks-registration",
+  "expectedRevision": 3,
+  "actor": "new-porter",
+  "target": "keeper",
+  "factId": "cargo-registration-state"
+}

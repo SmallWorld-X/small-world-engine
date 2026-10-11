@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "clerk-corrects-copy-from-message",
+  "expectedRevision": 3,
+  "actor": "clerk",
+  "message": {
+    "factId": "cargo-slip-code",
+    "sourcePersonId": "keeper",
+    "receivedRevision": 3
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "author-appoints-verifier",
+  "expectedRevision": 0,
+  "actor": "@author",
+  "reason": "作者明确任命许瑶为本批临时核验人；培训与行会委托是已记录前提，不是文字说明自动赋权。",
+  "effects": [
+    {
+      "type": "fact.change",
+      "factId": "clerk-verification-role",
+      "expectedValue": "unassigned",
+      "value": "registrar"
+    },
+    {
+      "type": "knowledge.learn",
+      "personId": "clerk",
+      "factId": "clerk-verification-role",
+      "sourcePersonId": "@world"
+    }
+  ]
+}

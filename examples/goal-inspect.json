@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "worldId": "goal-river-town",
+  "requestId": "goal-first",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "intent": "先询问铁料箱下落，得到消息后沿本人已知通路去现场核实；不把听到消息当作取得或运走货箱。",
+  "components": [
+    {"stage": "prepare", "id": "knowledge-goal-preparation", "version": "1"},
+    {"stage": "candidates", "id": "knowledge-goal-candidates", "version": "1"},
+    {"stage": "select", "id": "knowledge-goal-selection", "version": "1"},
+    {"stage": "resolve", "id": "knowledge-goal-action", "version": "1"},
+    {"stage": "feedback", "id": "knowledge-goal-feedback", "version": "1"}
+  ],
+  "scenario": {
+    "goal": {
+      "id": "inspect-cargo",
+      "kind": "observeLocatedFact",
+      "factId": "cargo-location",
+      "locationFactId": "cargo-location",
+      "label": "现场核实铁料箱下落"
+    },
+    "remainingGaps": [
+      "货主是否允许取货、货箱重量和搬运工具仍未知；本次核实不能自动变成运输。",
+      "人物得到的消息可能过时，现场观察记录的是观察发生时的状态。"
+    ]
+  }
+}

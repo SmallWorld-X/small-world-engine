@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "worldId": "message-reaction-river-town",
+  "requestId": "reaction-keeper-explains-conditions",
+  "expectedRevision": 4,
+  "actor": "keeper",
+  "intent": "收到阿禾现场查证消息后，按本人已知的未放行和待登记条件回应；规则由作者提供，不替货主授权。",
+  "scenario": {
+    "message": {
+      "factId": "cargo-handoff-status",
+      "sourcePersonId": "apprentice",
+      "receivedRevision": 4
+    },
+    "remainingGaps": [
+      "说明交接条件不代表登记已完成、许可已授予或货物已送达。"
+    ]
+  },
+  "components": [
+    {
+      "stage": "prepare",
+      "id": "message-reaction-preparation",
+      "version": "1"
+    },
+    {
+      "stage": "candidates",
+      "id": "message-reaction-candidates",
+      "version": "1"
+    },
+    {
+      "stage": "select",
+      "id": "message-reaction-selection",
+      "version": "1"
+    },
+    {
+      "stage": "resolve",
+      "id": "message-reaction-action",
+      "version": "1"
+    },
+    {
+      "stage": "feedback",
+      "id": "message-reaction-feedback",
+      "version": "1"
+    }
+  ]
+}

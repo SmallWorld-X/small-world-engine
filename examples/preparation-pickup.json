@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "actor": "apprentice",
+  "intent": "先查明铁料下落，再检查是否具备取货依据；这些检查不表示取货已经发生",
+  "templateId": "pickup-goods",
+  "templateVersion": "1",
+  "requirements": [
+    {"id":"town-basis","label":"河港镇形成的背景依据","stage":"understand","factId":"town-origin","scope":"world"},
+    {"id":"reason-to-ask","label":"阿禾清晨看到货箱不在原处","stage":"inquire","factId":"missing-at-dawn","scope":"actor"},
+    {"id":"locate-cargo","label":"阿禾掌握货箱位置","stage":"locate","factId":"cargo-location","scope":"actor"},
+    {"id":"cargo-owner","label":"确认这箱铁料归谁","stage":"pickup","factId":"cargo-owner","scope":"world"},
+    {"id":"assignment","label":"阿禾受谁委托、要做什么","stage":"pickup","factId":"cargo-assignment","scope":"actor"},
+    {"id":"permission","label":"阿禾取得货主的取货许可","stage":"pickup","factId":"cargo-pickup-permission","scope":"actor","equals":true},
+    {"id":"weight","label":"货箱重量已明确，数量不能代替重量","stage":"pickup","factId":"cargo-weight-kg","scope":"actor"},
+    {"id":"tool","label":"可用的搬运工具已明确","stage":"pickup","factId":"cargo-transport-tool","scope":"actor"},
+    {"id":"deadline","label":"阿禾掌握交货期限","stage":"pickup","factId":"cargo-delivery-deadline","scope":"actor"}
+  ]
+}

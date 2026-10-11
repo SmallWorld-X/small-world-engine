@@ -1,0 +1,509 @@
+{
+  "blueprint" : {
+    "idea" : "阿禾是石岭铁铺的学徒。清晨他发现码头原处没有铁料箱，想先问清下落，再决定是否取回。人物尚未行动，取货与运送不是已经发生的结果。",
+    "schemaVersion" : 1,
+    "sections" : {
+      "emotions" : [ {
+        "feeling" : "焦虑",
+        "personId" : "apprentice",
+        "trigger" : "missing-at-dawn 是阿禾已知的清晨观察；他担心误送货，但尚未决定下一步。"
+      }, {
+        "feeling" : "牵挂",
+        "personId" : "boatman",
+        "trigger" : "本人私密资料记载家中有人生病；这条初始感受不向阿禾公开。"
+      } ],
+      "extras" : [ {
+        "groupId" : "dock-workers",
+        "id" : "porter",
+        "name" : "许顺",
+        "place" : "warehouse",
+        "privateProfile" : {
+          "concern" : "这一趟结清工钱后再接下一单"
+        },
+        "publicProfile" : {
+          "age" : null,
+          "appearance" : "腰上系着粗绳，右腿裤脚缝着一块补丁",
+          "occupation" : "搬运工"
+        }
+      } ],
+      "factions" : [ {
+        "attributes" : {
+          "role" : "登记本地货栈和船工的交接事务",
+          "source" : "作者设定；权限边界和规章仍未展开"
+        },
+        "id" : "port-guild",
+        "name" : "河港行会",
+        "refs" : [ "warehouse", "boatman" ]
+      } ],
+      "groups" : [ {
+        "attributes" : {
+          "livelihood" : "替靠岸货船和沿河货栈搬运货物",
+          "source" : "总人数是作者设定；其余成员未展开"
+        },
+        "id" : "dock-workers",
+        "name" : "河港搬运工",
+        "populationFactId" : "dock-population",
+        "refs" : [ "wharf", "warehouse" ]
+      } ],
+      "laws" : [ {
+        "factId" : "iron-quantity",
+        "id" : "iron-quantity-bound",
+        "kind" : "range",
+        "max" : 100,
+        "min" : 0
+      }, {
+        "factId" : "cargo-location",
+        "id" : "cargo-location-domain",
+        "kind" : "oneOf",
+        "values" : [ "wharf", "warehouse", "forge" ]
+      } ],
+      "people" : [ {
+        "id" : "apprentice",
+        "name" : "阿禾",
+        "place" : "wharf",
+        "privateProfile" : {
+          "concern" : "怕误了送货，又不敢独自同货主争执",
+          "intent" : "先查明铁料箱下落，取货方式仍待决定"
+        },
+        "publicProfile" : {
+          "age" : 19,
+          "appearance" : "袖口卷起，手背留着新旧不一的烫痕",
+          "occupation" : "铁铺学徒"
+        }
+      }, {
+        "id" : "boatman",
+        "name" : "陈舟",
+        "place" : "wharf",
+        "privateProfile" : {
+          "concern" : "家中有人生病，急着办完交接"
+        },
+        "publicProfile" : {
+          "age" : null,
+          "appearance" : "肤色晒得发黑，肩上搭着一条旧布巾",
+          "occupation" : "船工"
+        }
+      }, {
+        "id" : "smith",
+        "name" : "林桂",
+        "place" : "forge",
+        "privateProfile" : {
+          "concern" : "今日交货需要那箱铁料"
+        },
+        "publicProfile" : {
+          "age" : null,
+          "appearance" : "围裙上有烧灼的小孔，手掌粗厚",
+          "occupation" : "铁匠"
+        }
+      } ],
+      "relationships" : [ {
+        "basis" : "阿禾以前随师傅来码头取料，陈舟经手过交接；这不等于阿禾知道陈舟家中的私事。",
+        "from" : "apprentice",
+        "to" : "boatman",
+        "value" : "只在交接时见过几面"
+      }, {
+        "basis" : "阿禾在林桂的铁铺学习修造农具，当前担任铁料交接跑腿。",
+        "from" : "apprentice",
+        "to" : "smith",
+        "value" : "师徒"
+      } ],
+      "world" : {
+        "entities" : [ {
+          "attributes" : {
+            "livelihood" : "河运交接、货栈和农具修造维持镇上日常买卖",
+            "position" : "河港与石岭之间",
+            "source" : "本示例的作者设定，未使用模型或外部史料"
+          },
+          "id" : "river-region",
+          "kind" : "region",
+          "name" : "河港镇",
+          "refs" : [ "wharf", "warehouse", "forge" ]
+        }, {
+          "attributes" : {
+            "quantityFactId" : "iron-quantity",
+            "source" : "本示例的作者设定",
+            "unit" : "示例计量单位；重量尚未确定",
+            "use" : "供石岭铁铺修造农具"
+          },
+          "id" : "iron-stock",
+          "kind" : "resource",
+          "name" : "待交接的铁料",
+          "refs" : [ "warehouse", "forge" ]
+        } ],
+        "facts" : [ {
+          "id" : "town-origin",
+          "knownBy" : [ ],
+          "mode" : "fixed",
+          "predicate" : "origin",
+          "subject" : "river-region",
+          "value" : "南有河港、北接石岭；旧时驻军与往来商人逐渐形成街市"
+        }, {
+          "id" : "missing-at-dawn",
+          "knownBy" : [ "apprentice" ],
+          "mode" : "fixed",
+          "predicate" : "wharf-observation-at-dawn",
+          "subject" : "iron-stock",
+          "value" : "阿禾清晨来到码头时，原处已经没有铁料箱"
+        }, {
+          "id" : "cargo-location",
+          "knownBy" : [ "boatman" ],
+          "mode" : "state",
+          "observableAt" : [ "warehouse", "forge" ],
+          "predicate" : "location",
+          "subject" : "iron-stock",
+          "value" : "warehouse"
+        }, {
+          "id" : "iron-quantity",
+          "knownBy" : [ "boatman", "smith" ],
+          "mode" : "state",
+          "observableAt" : [ "warehouse", "forge" ],
+          "predicate" : "quantity",
+          "subject" : "iron-stock",
+          "value" : 40
+        }, {
+          "id" : "dock-population",
+          "knownBy" : [ "boatman" ],
+          "mode" : "state",
+          "predicate" : "population",
+          "subject" : "dock-workers",
+          "value" : 12
+        } ],
+        "places" : [ {
+          "id" : "wharf",
+          "name" : "南码头"
+        }, {
+          "id" : "warehouse",
+          "name" : "沿河货栈"
+        }, {
+          "id" : "forge",
+          "name" : "石岭铁铺"
+        } ],
+        "routes" : [ {
+          "from" : "wharf",
+          "to" : "warehouse"
+        }, {
+          "from" : "warehouse",
+          "to" : "wharf"
+        }, {
+          "from" : "warehouse",
+          "to" : "forge"
+        }, {
+          "from" : "forge",
+          "to" : "warehouse"
+        } ]
+      }
+    },
+    "title" : "河港镇：查明铁料下落",
+    "unresolved" : [ "铁料箱为何从码头转到货栈，尚无已确认经历。", "陈舟知道货箱当前在货栈，但这条认识的具体取得过程尚未补齐。", "阿禾是否已听过师傅今日交货的期限，尚未确认。", "货箱重量、可用搬运工具和货主是否允许取货，须在决定搬运前补齐。", "人物是否熟悉每条路线尚未确认；客观道路存在不等于人物已经知道怎么走。", "情感条目只是作者提供的初始感受及触发依据，当前没有心理变化或自动行动推导。" ],
+    "worldId" : "genesis-river-town"
+  },
+  "construction" : {
+    "evidence" : [ {
+      "method" : "structured-input",
+      "moduleId" : "world",
+      "outputs" : {
+        "entities" : 2,
+        "facts" : 5,
+        "places" : 3,
+        "routes" : 4
+      },
+      "section" : "world"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "person",
+      "outputs" : {
+        "characters" : 3
+      },
+      "section" : "people"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "faction",
+      "outputs" : {
+        "entities" : 1
+      },
+      "section" : "factions"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "group",
+      "outputs" : {
+        "entities" : 1
+      },
+      "section" : "groups"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "extra",
+      "outputs" : {
+        "characters" : 1,
+        "entityRefsAdds" : 1
+      },
+      "section" : "extras"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "relationship",
+      "outputs" : {
+        "relationships" : 2
+      },
+      "section" : "relationships"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "emotion",
+      "outputs" : {
+        "privateProfileAdds" : 2
+      },
+      "section" : "emotions"
+    }, {
+      "method" : "structured-input",
+      "moduleId" : "law",
+      "outputs" : {
+        "laws" : 2
+      },
+      "section" : "laws"
+    } ],
+    "moduleOrder" : [ "world", "person", "faction", "group", "extra", "relationship", "emotion", "law" ],
+    "modules" : [ {
+      "id" : "world",
+      "notes" : [ "根据world明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "entities" : 2,
+        "facts" : 5,
+        "places" : 3,
+        "routes" : 4
+      }
+    }, {
+      "id" : "person",
+      "notes" : [ "根据people明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "characters" : 3
+      }
+    }, {
+      "id" : "faction",
+      "notes" : [ "根据factions明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "entities" : 1
+      }
+    }, {
+      "id" : "group",
+      "notes" : [ "根据groups明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "entities" : 1
+      }
+    }, {
+      "id" : "extra",
+      "notes" : [ "根据extras明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "characters" : 1,
+        "entityRefsAdds" : 1
+      }
+    }, {
+      "id" : "relationship",
+      "notes" : [ "关系依据：apprentice→boatman；阿禾以前随师傅来码头取料，陈舟经手过交接；这不等于阿禾知道陈舟家中的私事。", "关系依据：apprentice→smith；阿禾在林桂的铁铺学习修造农具，当前担任铁料交接跑腿。", "根据relationships明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "relationships" : 2
+      }
+    }, {
+      "id" : "emotion",
+      "notes" : [ "根据emotions明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "privateProfileAdds" : 2
+      }
+    }, {
+      "id" : "law",
+      "notes" : [ "根据laws明确资料构造；未补造未声明的经历或未来结果。" ],
+      "outputs" : {
+        "laws" : 2
+      }
+    } ],
+    "notes" : [ "idea仅保留创作目标；本次构造直接处理结构化资料，未进行自然语言理解或人物心理推导。" ],
+    "unresolved" : [ "铁料箱为何从码头转到货栈，尚无已确认经历。", "陈舟知道货箱当前在货栈，但这条认识的具体取得过程尚未补齐。", "阿禾是否已听过师傅今日交货的期限，尚未确认。", "货箱重量、可用搬运工具和货主是否允许取货，须在决定搬运前补齐。", "人物是否熟悉每条路线尚未确认；客观道路存在不等于人物已经知道怎么走。", "情感条目只是作者提供的初始感受及触发依据，当前没有心理变化或自动行动推导。" ]
+  },
+  "kind" : "world-draft",
+  "schemaVersion" : 1,
+  "seed" : {
+    "characters" : [ {
+      "id" : "apprentice",
+      "name" : "阿禾",
+      "place" : "wharf",
+      "privateProfile" : {
+        "concern" : "怕误了送货，又不敢独自同货主争执",
+        "initialEmotions" : [ {
+          "feeling" : "焦虑",
+          "trigger" : "missing-at-dawn 是阿禾已知的清晨观察；他担心误送货，但尚未决定下一步。"
+        } ],
+        "intent" : "先查明铁料箱下落，取货方式仍待决定"
+      },
+      "publicProfile" : {
+        "age" : 19,
+        "appearance" : "袖口卷起，手背留着新旧不一的烫痕",
+        "occupation" : "铁铺学徒"
+      }
+    }, {
+      "id" : "boatman",
+      "name" : "陈舟",
+      "place" : "wharf",
+      "privateProfile" : {
+        "concern" : "家中有人生病，急着办完交接",
+        "initialEmotions" : [ {
+          "feeling" : "牵挂",
+          "trigger" : "本人私密资料记载家中有人生病；这条初始感受不向阿禾公开。"
+        } ]
+      },
+      "publicProfile" : {
+        "age" : null,
+        "appearance" : "肤色晒得发黑，肩上搭着一条旧布巾",
+        "occupation" : "船工"
+      }
+    }, {
+      "id" : "smith",
+      "name" : "林桂",
+      "place" : "forge",
+      "privateProfile" : {
+        "concern" : "今日交货需要那箱铁料"
+      },
+      "publicProfile" : {
+        "age" : null,
+        "appearance" : "围裙上有烧灼的小孔，手掌粗厚",
+        "occupation" : "铁匠"
+      }
+    }, {
+      "id" : "porter",
+      "name" : "许顺",
+      "place" : "warehouse",
+      "privateProfile" : {
+        "concern" : "这一趟结清工钱后再接下一单"
+      },
+      "publicProfile" : {
+        "age" : null,
+        "appearance" : "腰上系着粗绳，右腿裤脚缝着一块补丁",
+        "groupId" : "dock-workers",
+        "occupation" : "搬运工"
+      }
+    } ],
+    "entities" : [ {
+      "attributes" : {
+        "livelihood" : "河运交接、货栈和农具修造维持镇上日常买卖",
+        "position" : "河港与石岭之间",
+        "source" : "本示例的作者设定，未使用模型或外部史料"
+      },
+      "id" : "river-region",
+      "kind" : "region",
+      "name" : "河港镇",
+      "refs" : [ "wharf", "warehouse", "forge" ]
+    }, {
+      "attributes" : {
+        "quantityFactId" : "iron-quantity",
+        "source" : "本示例的作者设定",
+        "unit" : "示例计量单位；重量尚未确定",
+        "use" : "供石岭铁铺修造农具"
+      },
+      "id" : "iron-stock",
+      "kind" : "resource",
+      "name" : "待交接的铁料",
+      "refs" : [ "warehouse", "forge" ]
+    }, {
+      "attributes" : {
+        "role" : "登记本地货栈和船工的交接事务",
+        "source" : "作者设定；权限边界和规章仍未展开"
+      },
+      "id" : "port-guild",
+      "kind" : "faction",
+      "name" : "河港行会",
+      "refs" : [ "warehouse", "boatman" ]
+    }, {
+      "attributes" : {
+        "livelihood" : "替靠岸货船和沿河货栈搬运货物",
+        "populationFactId" : "dock-population",
+        "source" : "总人数是作者设定；其余成员未展开"
+      },
+      "id" : "dock-workers",
+      "kind" : "group",
+      "name" : "河港搬运工",
+      "refs" : [ "wharf", "warehouse", "porter" ]
+    } ],
+    "facts" : [ {
+      "id" : "town-origin",
+      "knownBy" : [ ],
+      "mode" : "fixed",
+      "predicate" : "origin",
+      "subject" : "river-region",
+      "value" : "南有河港、北接石岭；旧时驻军与往来商人逐渐形成街市"
+    }, {
+      "id" : "missing-at-dawn",
+      "knownBy" : [ "apprentice" ],
+      "mode" : "fixed",
+      "predicate" : "wharf-observation-at-dawn",
+      "subject" : "iron-stock",
+      "value" : "阿禾清晨来到码头时，原处已经没有铁料箱"
+    }, {
+      "id" : "cargo-location",
+      "knownBy" : [ "boatman" ],
+      "mode" : "state",
+      "observableAt" : [ "warehouse", "forge" ],
+      "predicate" : "location",
+      "subject" : "iron-stock",
+      "value" : "warehouse"
+    }, {
+      "id" : "iron-quantity",
+      "knownBy" : [ "boatman", "smith" ],
+      "mode" : "state",
+      "observableAt" : [ "warehouse", "forge" ],
+      "predicate" : "quantity",
+      "subject" : "iron-stock",
+      "value" : 40
+    }, {
+      "id" : "dock-population",
+      "knownBy" : [ "boatman" ],
+      "mode" : "state",
+      "predicate" : "population",
+      "subject" : "dock-workers",
+      "value" : 12
+    } ],
+    "laws" : [ {
+      "factId" : "iron-quantity",
+      "id" : "iron-quantity-bound",
+      "kind" : "range",
+      "max" : 100,
+      "min" : 0
+    }, {
+      "factId" : "cargo-location",
+      "id" : "cargo-location-domain",
+      "kind" : "oneOf",
+      "values" : [ "wharf", "warehouse", "forge" ]
+    } ],
+    "places" : [ {
+      "id" : "wharf",
+      "name" : "南码头"
+    }, {
+      "id" : "warehouse",
+      "name" : "沿河货栈"
+    }, {
+      "id" : "forge",
+      "name" : "石岭铁铺"
+    } ],
+    "relationships" : [ {
+      "basis" : "阿禾以前随师傅来码头取料，陈舟经手过交接；这不等于阿禾知道陈舟家中的私事。",
+      "from" : "apprentice",
+      "to" : "boatman",
+      "value" : "只在交接时见过几面"
+    }, {
+      "basis" : "阿禾在林桂的铁铺学习修造农具，当前担任铁料交接跑腿。",
+      "from" : "apprentice",
+      "to" : "smith",
+      "value" : "师徒"
+    } ],
+    "routes" : [ {
+      "from" : "wharf",
+      "to" : "warehouse"
+    }, {
+      "from" : "warehouse",
+      "to" : "wharf"
+    }, {
+      "from" : "warehouse",
+      "to" : "forge"
+    }, {
+      "from" : "forge",
+      "to" : "warehouse"
+    } ],
+    "schemaVersion" : 1,
+    "title" : "河港镇：查明铁料下落",
+    "worldId" : "genesis-river-town"
+  }
+}

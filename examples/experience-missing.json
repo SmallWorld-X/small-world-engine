@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-river-town",
+  "requestId": "apprentice-needs-cargo-permission",
+  "expectedRevision": 0,
+  "actor": "apprentice",
+  "intent": "作者希望阿禾进入取货准备，但阿禾资料中尚无货主许可；应停在缺资料状态，不伪造已完成询问或运送。",
+  "components": [
+    {"stage": "prepare", "id": "declared-preparation", "version": "1"},
+    {"stage": "candidates", "id": "declared-candidates", "version": "1"},
+    {"stage": "select", "id": "priority-selection", "version": "1"},
+    {"stage": "resolve", "id": "selected-action", "version": "1"},
+    {"stage": "feedback", "id": "actual-feedback", "version": "1"}
+  ],
+  "scenario": {
+    "requiredEvidence": [
+      {"path": "/self/privateProfile/intent", "label": "阿禾当前的本人意图"},
+      {"path": "/nearby/0/id", "label": "陈舟在同一地点", "equals": "boatman"},
+      {"path": "/relationships/0/to", "label": "与陈舟已有交接关系", "equals": "boatman"},
+      {"path": "/self/privateProfile/cargoPermission", "label": "缺少的货主取货许可"}
+    ],
+    "candidates": [
+      {
+        "id": "ask-boatman",
+        "module": "ask",
+        "arguments": {"target": "boatman", "factId": "cargo-location"},
+        "description": "保留一个声明候选；准备阶段没有通过时不能执行候选。",
+        "priority": 1,
+        "evidence": [{"path": "/nearby/0/id", "label": "候选询问对象在同地", "equals": "boatman"}]
+      }
+    ],
+    "remainingGaps": ["货主取货许可未提供；补资料由作者决定，程序不编造许可。"]
+  }
+}

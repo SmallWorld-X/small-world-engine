@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "keeper-shares-batch-slip",
+  "expectedRevision": 2,
+  "actor": "keeper",
+  "reason": "作者给定行动：保管员与许瑶同地，转述自己持有的本批随货签编号。",
+  "effects": [
+    {
+      "type": "knowledge.share",
+      "from": "keeper",
+      "to": "clerk",
+      "factId": "cargo-slip-code"
+    }
+  ]
+}

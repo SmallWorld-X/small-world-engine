@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "worldId": "identity-river-town",
+  "requestId": "keeper-registers-from-result",
+  "expectedRevision": 6,
+  "actor": "keeper",
+  "message": {
+    "factId": "registry-copy-code",
+    "sourcePersonId": "clerk",
+    "receivedRevision": 4
+  }
+}

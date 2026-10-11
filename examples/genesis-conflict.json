@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "worldId": "genesis-conflict",
+  "title": "拒绝示例：铁料数量与声明法则冲突",
+  "idea": "作者同时提供了40单位铁料和最多30单位的法则。构造器应报告冲突，不能自行改成30，也不能写入正式世界。",
+  "unresolved": ["数量与上限须由作者修正；程序不代替作者挑选其中一个值。"],
+  "sections": {
+    "world": {
+      "places": [{"id": "wharf", "name": "南码头"}],
+      "facts": [{"id": "iron-quantity", "subject": "iron-stock", "predicate": "quantity", "value": 40, "mode": "state", "knownBy": []}],
+      "entities": [{"id": "iron-stock", "kind": "resource", "name": "待交接的铁料", "attributes": {"quantityFactId": "iron-quantity", "source": "故意提供矛盾的作者配置"}, "refs": ["wharf"]}]
+    },
+    "people": [],
+    "relationships": [],
+    "emotions": [],
+    "factions": [],
+    "groups": [],
+    "extras": [],
+    "laws": [{"id": "iron-quantity-bound", "kind": "range", "factId": "iron-quantity", "min": 0, "max": 30}]
+  }
+}

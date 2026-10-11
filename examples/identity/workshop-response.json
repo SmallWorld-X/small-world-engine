@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "worldId": "community-repair-workshop",
+  "requestId": "steward-opens-equipment-from-repair-message",
+  "expectedRevision": 1,
+  "actor": "steward",
+  "message": { "factId": "repair-record", "sourcePersonId": "volunteer", "receivedRevision": 1 }
+}

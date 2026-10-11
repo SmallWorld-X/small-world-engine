@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "worldId": "time-town",
+  "requestId": "time-classmates",
+  "expectedRevision": 1,
+  "actor": "@author",
+  "reason": "作者明确确认110年的角色变化：周宁离开许家旧职，两人共同入学，双向关系成为同学。只记录该设定，不宣称AI已经推导或演出完整过程。",
+  "effects": [
+    {
+      "type": "relationship.change",
+      "from": "zhou-ning",
+      "to": "xu-cheng",
+      "expectedValue": "主人家的晚辈",
+      "value": "同学",
+      "basis": "作者本次明确设定：纪年110年周宁结束许家旧职，与许澄共同进入北城学堂，因此当前角色关系成为同学；离职与入学的细节尚未逐件演绎。"
+    },
+    {
+      "type": "relationship.change",
+      "from": "xu-cheng",
+      "to": "zhou-ning",
+      "expectedValue": "家中仆人",
+      "value": "同学",
+      "basis": "作者本次明确设定：纪年110年许澄与已经离开许家旧职的周宁共同进入北城学堂，因此当前角色关系成为同学；旧身份经历保留，感情和信任未自动改变。"
+    }
+  ]
+}

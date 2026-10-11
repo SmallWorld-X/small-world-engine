@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "worldId": "community-repair-workshop",
+  "title": "社区修缮工坊：修缮消息与设备开放",
+  "worldTime": { "unit": "year", "year": 100 },
+  "places": [{ "id": "workshop", "name": "社区修缮工坊" }],
+  "routes": [],
+  "characters": [
+    {
+      "id": "steward",
+      "name": "工坊管理者",
+      "place": "workshop",
+      "publicProfile": { "occupation": "社区工坊管理者" },
+      "privateProfile": {
+        "source": "作者明确声明管理资格、决定规则与执行范围；本例不模拟修缮过程，不自动推导职务权力。",
+        "responsePolicy": {
+          "goalId": "reopen-repaired-equipment",
+          "goal": "收到修缮者消息后，按本人明确规则完成检查并开放设备；公众使用许可另行处理",
+          "rules": [
+            {
+              "id": "open-after-repair-message",
+              "priority": 10,
+              "when": { "factId": "repair-record", "equals": "repaired" },
+              "conditions": [],
+              "stateChanges": [
+                { "factId": "equipment-available", "expectedValue": false, "value": true },
+                { "factId": "inspection-state", "expectedValue": "pending", "value": "passed" }
+              ],
+              "shareFactIds": ["equipment-available"],
+              "description": "依据收到的修缮消息作关联决定并现场复核；当前管理资格与修缮前提仍由声明法则裁决，不据此批准公众使用。"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "volunteer",
+      "name": "社区修缮者",
+      "place": "workshop",
+      "publicProfile": { "occupation": "志愿修缮者" },
+      "privateProfile": { "source": "作者明确设定此前设备修缮已完成且本人持有修缮记录，本轮从分享记录开始；不声称引擎模拟了此前修缮。" }
+    }
+  ],
+  "facts": [
+    { "id": "repair-record", "subject": "community-equipment", "predicate": "repair-record", "value": "repaired", "mode": "fixed", "knownBy": ["volunteer"], "observableAt": ["workshop"] },
+    { "id": "steward-role", "subject": "steward", "predicate": "workshop-role", "value": "steward", "mode": "fixed", "knownBy": ["steward"] },
+    { "id": "equipment-available", "subject": "community-equipment", "predicate": "available", "value": false, "mode": "state", "knownBy": ["steward"], "observableAt": ["workshop"] },
+    { "id": "inspection-state", "subject": "community-equipment", "predicate": "inspection", "value": "pending", "mode": "state", "knownBy": ["steward"], "observableAt": ["workshop"] },
+    { "id": "spare-planks", "subject": "workshop-supplies", "predicate": "quantity", "value": 4, "mode": "state", "knownBy": ["steward", "volunteer"], "observableAt": ["workshop"] },
+    { "id": "public-use-permission", "subject": "community-equipment", "predicate": "public-use-permission", "value": false, "mode": "state", "knownBy": ["steward", "volunteer"], "observableAt": ["workshop"] }
+  ],
+  "laws": [
+    { "id": "availability-domain", "kind": "oneOf", "factId": "equipment-available", "values": [false, true] },
+    { "id": "inspection-domain", "kind": "oneOf", "factId": "inspection-state", "values": ["pending", "passed"] },
+    { "id": "permission-domain", "kind": "oneOf", "factId": "public-use-permission", "values": [false, true] },
+    { "id": "supplies-nonnegative", "kind": "range", "factId": "spare-planks", "min": 0 },
+    { "id": "availability-writer", "kind": "writeAccess", "factId": "equipment-available", "actors": ["steward"] },
+    { "id": "inspection-writer", "kind": "writeAccess", "factId": "inspection-state", "actors": ["steward"] },
+    { "id": "supplies-writer", "kind": "writeAccess", "factId": "spare-planks", "actors": ["steward"] },
+    { "id": "public-permission-writer", "kind": "writeAccess", "factId": "public-use-permission", "actors": [] },
+    { "id": "availability-requires-repair-and-steward", "kind": "changeRequires", "factId": "equipment-available", "whenEquals": true, "conditions": [{ "factId": "repair-record", "equals": "repaired" }], "actorCondition": { "predicate": "workshop-role", "equals": "steward" } },
+    { "id": "inspection-requires-repair-and-steward", "kind": "changeRequires", "factId": "inspection-state", "whenEquals": "passed", "conditions": [{ "factId": "repair-record", "equals": "repaired" }], "actorCondition": { "predicate": "workshop-role", "equals": "steward" } }
+  ]
+}
