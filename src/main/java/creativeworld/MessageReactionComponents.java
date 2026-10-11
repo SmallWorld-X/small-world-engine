@@ -50,6 +50,11 @@ public final class MessageReactionComponents {
             JsonNode saved = context.outputs().path(Stage.CANDIDATES.key()).path("candidates");
             if (!canonical(saved).equals(canonical(generated.get("candidates"))))
                 throw bad("消息回应候选不属于当前本人消息和策略的判断结果");
+            if (stateResponse && stage == Stage.RESOLVE) {
+                ObjectNode expected = DELEGATES.get(Stage.SELECT.ordinal()).run(delegated);
+                if (!text(context.outputs().path(Stage.SELECT.key()), "candidateId").equals(text(expected, "candidateId")))
+                    throw bad("状态回应选择必须与行为版本1的最高优先级、同分首项决定一致");
+            }
             return DELEGATES.get(stage.ordinal()).run(delegated);
         }
     }

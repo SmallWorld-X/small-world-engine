@@ -46,7 +46,7 @@ flowchart LR
 
 当前运行入口验证范围是 **Windows + PowerShell 7 + JDK 21**。需要完整 JDK，只有 Java 运行环境不够。Git 用于克隆仓库；也可以从仓库页面下载源码压缩包。Maven 3.6.3 或更新版本用于下载 JSON 依赖；本项目没有 Maven 构建文件，也不需要数据库、Spring 或模型密钥。
 
-在 **PowerShell 7** 中执行。先将下面的 JDK 路径替换成你的实际安装目录：
+在 **PowerShell 7** 中执行。先将下面的 JDK 路径替换成你的实际安装目录。所有运行与验证入口使用同一环境检查：指定 `JAVA_HOME` 时必须指向完整的 JDK 21；未指定时，从 `PATH` 的 `javac.exe` 定位同目录的 `java.exe`。错误配置、其他 Java 版本或缺依赖会明确停止，不回退到维护者电脑的路径。
 
 ```powershell
 $env:JAVA_HOME = 'C:\path\to\jdk-21'
@@ -134,7 +134,7 @@ $worldFile = Join-Path $trialDirectory 'world.json'
 
 ### 常见启动问题
 
-- **找不到 JDK**：检查当前 PowerShell 会话的 `JAVA_HOME` 是否指向 JDK 21 根目录，其中应有 `bin\javac.exe`。
+- **找不到 JDK 或版本不符**：检查当前 PowerShell 会话的 `JAVA_HOME` 是否指向完整 JDK 21 根目录，其中应有 `bin\java.exe` 和 `bin\javac.exe`；若通过 `PATH` 使用 JDK，请先移除错误的 `JAVA_HOME`，并确认两个工具来自同一 JDK 21。
 - **缺少 JSON 依赖**：重新执行依赖下载步骤，确认使用当前用户的默认 Maven 缓存位置。
 - **脚本无法执行**：使用 PowerShell 7。若仅当前会话受到执行策略限制，在确认源码可信后可执行 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned`，再重试；组织管理策略仍以本机策略为准。
 - **输出文件已经存在**：使用新的输出文件或运行目录。引擎不会用初始化替你重置旧存档。
@@ -172,6 +172,8 @@ $worldFile = Join-Path $trialDirectory 'world.json'
 
 新增能力应先通过一个可复现的小案例，再使用不同人物和场景检查能否复用，同时核对旧历史。具体姓名和剧情条件放在世界资料里，通用规则保持集中。
 
+本次候选收尾与2026年10月12日至18日的下一步验收顺序见[小步迭代计划](ITERATION-PLAN.md)。计划中的工作不代表已经实现。
+
 ## 当前局限与后续方向
 
 - 世界输入仍由创作者明确提供；尚未接入 AI 辅助补全、自然语言目标解释或正文生成。
@@ -204,7 +206,7 @@ $worldFile = Join-Path $trialDirectory 'world.json'
 
 ## 许可
 
-本项目采用 [PolyForm Noncommercial License 1.0.0](LICENSE)，完整条款来自 [PolyForm 官方](https://polyformproject.org/licenses/noncommercial/1.0.0)，未另加或删改。归属通知见 [NOTICE](NOTICE)。
+本项目采用 [PolyForm Noncommercial License 1.0.0](LICENSE)，完整条款来自 [PolyForm 官方](https://polyformproject.org/licenses/noncommercial/1.0.0)，未另加或删改。项目作者署名 GrandCypress，归属通知见 [NOTICE](NOTICE)。
 
 该标准许可允许条款规定的非商业使用、学习研究、修改和分享，也包括条款列明的教育、公益及政府等机构用途。**超出该标准许可允许范围的用途，需要另行取得相关权利人的授权**；有商业应用预期时，请先核对完整条款并联系维护者确认。分发时须向接收者提供许可条款或其网址，以及规定的通知。
 

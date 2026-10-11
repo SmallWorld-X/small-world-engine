@@ -13,11 +13,9 @@ $eventPlan = [System.Collections.Generic.List[object]]::new()
 $journeys = [System.Collections.Generic.List[object]]::new()
 $failure = $null
 $actualEventCount = $null
-$javaRoot = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\javac.exe'))) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object { Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar" }
-$classPath = (@((Join-Path $PSScriptRoot 'build\classes')) + $dependencies) -join ';'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$classPath = $runtime.classPath
 
 function Save-Input([string]$Name, [object]$Value, [string]$Source = '') {
     $path = Join-Path $runRoot $Name

@@ -137,6 +137,10 @@ public final class ContinuationCheck {
                 equal(first.get(30, TimeUnit.SECONDS), second.get(30, TimeUnit.SECONDS), "两个调用得到一致经历"); equal(f.world.inspect().path("revision").asInt(), 5, "只有五笔事件");
             } finally { pool.shutdownNow(); }
         });
+        run("两个世界的状态回应拒绝自定义选择较低优先级规则", () -> rejectedStateChoice(false));
+        run("两个世界的状态回应拒绝自定义选择同分后项", () -> rejectedStateChoice(true));
+        run("两个世界接受自定义选择最高优先级规则，恢复不重复提交", () -> acceptedStateChoice(false));
+        run("两个世界接受自定义选择同分首项，恢复不重复提交", () -> acceptedStateChoice(true));
         run("阶段顺序缺失、目录孤儿记录被拒绝", () -> {
             Fixture f = fixture("river"); run(f, 1); Files.move(f.root.resolve("episode/turn-001.json"), f.root.resolve("episode/turn-002.json"));
             byte[] before = Files.readAllBytes(f.world.path()); rejects(() -> run(f, 32)); unchanged(f.world.path(), before);
@@ -164,6 +168,54 @@ public final class ContinuationCheck {
     private static Fixture rebuilt(Fixture old) throws Exception {
         Path root = Files.createTempDirectory("continuation-var-"); WorldStore world = new WorldStore(root.resolve("world.json")); world.initialize(old.seed);
         return new Fixture(root, world, old.request, old.seed);
+    }
+    private static Fixture stateChoiceFixture(String name, boolean tied) throws Exception {
+        Fixture f = fixture(name);
+        ArrayNode rules = (ArrayNode) f.seed.path("characters").get(0).path("privateProfile").path("responsePolicy").path("rules");
+        ObjectNode alternate = rules.get(0).deepCopy();
+        alternate.put("id", "alternate-choice").put("priority", rules.get(0).path("priority").asInt() - (tied ? 0 : 1));
+        alternate.put("description", "另一条本人依据完整的候选，核对规则选择的一致性"); rules.add(alternate);
+        for (JsonNode row : f.request.path("activities").get(1).path("components"))
+            if (row.path("stage").asText().equals("select")) ((ObjectNode) row).put("id", "test-state-selection");
+        return rebuilt(f);
+    }
+    private static ExperienceEngine choosingState(String ruleId) {
+        ExperienceEngine engine = new ExperienceEngine();
+        engine.register(new ExperienceComponent() {
+            public String id() { return "test-state-selection"; } public String version() { return "1"; }
+            public Stage stage() { return Stage.SELECT; }
+            public ObjectNode run(Context context) {
+                return JSON.createObjectNode().put("status", "ready").put("candidateId", ruleId).put("reason", "定向检查替换选择组件");
+            }
+        });
+        return engine;
+    }
+    private static void rejectedStateChoice(boolean tied) throws Exception {
+        for (String name : List.of("river", "workshop")) {
+            Fixture f = stateChoiceFixture(name, tied); ExperienceEngine engine = choosingState("alternate-choice"); Path episode = f.root.resolve("episode");
+            WorldContinuation.run(f.world, engine, f.request, episode, 1);
+            byte[] before = Files.readAllBytes(f.world.path());
+            rejects(() -> WorldContinuation.run(f.world, engine, f.request, episode, 2)); unchanged(f.world.path(), before);
+            equal(f.world.history().path("events").size(), 1, "拒绝错误选择时不新增正式事件：" + name);
+            JsonNode record = JSON.readTree(episode.resolve("turn-002.json").toFile());
+            check(!record.has("prepared") && !record.has("receipt"), "错误选择在准备正式行为前停止：" + name);
+            equal(record.path("stages").get(1).path("output").path("candidates").size(), 2, "两条候选都有本人依据");
+            equal(record.path("stages").get(2).path("output").path("candidateId").asText(), "alternate-choice", "保存实际选择");
+            equal(record.path("stages").get(3).path("stage").asText(), "resolve", "在转换阶段拒绝");
+            check(record.path("error").path("message").asText().contains("状态回应选择必须"), "保存明确的规则一致性拒绝原因");
+        }
+    }
+    private static void acceptedStateChoice(boolean tied) throws Exception {
+        for (String name : List.of("river", "workshop")) {
+            Fixture f = stateChoiceFixture(name, tied); Path episode = f.root.resolve("episode");
+            JsonNode done = WorldContinuation.run(f.world, choosingState("submit-on-location"), f.request, episode, 32);
+            equal(done.path("status").asText(), "quiescent", "合法选择继续完成：" + name);
+            equal(f.world.history().path("events").size(), 5, "仍是五笔正式事件：" + name);
+            check(f.world.history().path("events").get(1).path("proposal").path("reason").asText().contains("选择submit-on-location"), "正式行为执行选中的规则");
+            byte[] before = Files.readAllBytes(f.world.path());
+            equal(WorldContinuation.run(new WorldStore(f.world.path()), choosingState("submit-on-location"), f.request, episode, 1), done, "重开后复用合法选择及原完成结果");
+            unchanged(f.world.path(), before);
+        }
     }
     private static JsonNode run(Fixture f, int budget) throws Exception { return WorldContinuation.run(f.world, new ExperienceEngine(), f.request, f.root.resolve("episode"), budget); }
     private static ObjectNode read(String name) throws Exception { return (ObjectNode) JSON.readTree(examples.resolve(name).toFile()); }

@@ -8,11 +8,9 @@ New-Item -ItemType Directory -Path $runRoot -Force | Out-Null
 $checks = [System.Collections.Generic.List[object]]::new()
 $calls = [System.Collections.Generic.List[object]]::new()
 $failure = $null
-$javaRoot = if ($env:JAVA_HOME) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object { Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar" }
-$classPath = (@((Join-Path $PSScriptRoot 'build\classes')) + $dependencies) -join ';'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$classPath = $runtime.classPath
 function Check([string]$Name, [bool]$Passed) {
     $checks.Add([pscustomobject]@{name=$Name;passed=$Passed})
     if (!$Passed) { throw "检查失败：$Name" }

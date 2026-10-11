@@ -64,10 +64,9 @@
 
 ## 命令行复现
 
-本轮已通过独立命令行进程验证下面这条构造、确认、推进、查询历史与重复提交的链路。每次手动复现创建不同目录，以保护已有草案与正式世界。
+先按 README 准备环境并进入自己取得的项目根目录。本轮已通过独立命令行进程验证下面这条构造、确认、推进、查询历史与重复提交的链路。每次手动复现创建不同目录，以保护已有草案与正式世界。
 
 ```powershell
-Set-Location F:\myplan\xuying-studio\creative-world-engine
 $timeRun = Join-Path 'runs' ('time-demo-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $timeRun | Out-Null
 

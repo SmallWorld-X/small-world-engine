@@ -4,15 +4,14 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 & (Join-Path $PSScriptRoot 'run.ps1') -BuildOnly
 if ($LASTEXITCODE -ne 0) { throw '共同时间编译未通过。' }
-$javaRoot = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\javac.exe'))) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object { Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar" }
-$classPath = (@((Join-Path $PSScriptRoot 'build\classes')) + $dependencies) -join ';'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$classPath = $runtime.classPath
 $runRoot = Join-Path $PSScriptRoot ('runs\time-cli-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $runRoot -Force | Out-Null
 $utf8 = [System.Text.UTF8Encoding]::new($false)
 $results = [System.Collections.Generic.List[object]]::new()
+$failure = $null
 function Invoke-Time([string[]]$Arguments, [string]$OutputName, [bool]$ExpectFailure = $false) {
     $ErrorActionPreference = 'Continue'
     $errorFile = Join-Path $runRoot ($OutputName + '.stderr.txt')
@@ -110,11 +109,17 @@ try {
     $null = Invoke-Time @('init', (Join-Path $PSScriptRoot 'examples\river-town.json'), $legacyWorld) 'legacy-initial.json'
     $legacyView = Invoke-Time @('view', $legacyWorld, 'apprentice') 'legacy-view.json'
     Assert-Time '无时钟旧世界保持原投影，不静默补年代' (!$legacyView.PSObject.Properties['worldTime'] -and !$legacyView.self.PSObject.Properties['publicProfileAsOfYear'])
-}
-finally {
+} catch {
+    $failure = $_.Exception.Message
+    if (@($results | Where-Object passed -eq $false).Count -eq 0) {
+        $results.Add([pscustomobject]@{name='共同时间命令行闭环未完成';passed=$false;error=$failure})
+    }
+} finally {
     $passed = @($results | Where-Object passed -eq $true).Count
     $failed = @($results | Where-Object passed -eq $false).Count
-    $report = [pscustomobject]@{checks=$results.Count;passed=$passed;failed=$failed;runDirectory=$runRoot;results=$results;actualModelCalled=$false;lifeExperiencesAutomaticallyDerived=$false}
+    $report = [pscustomobject]@{checks=$results.Count;passed=$passed;failed=$failed;runDirectory=$runRoot;results=$results;error=$failure;actualModelCalled=$false;lifeExperiencesAutomaticallyDerived=$false}
     $null = Save-Time 'time-cli-check.json' $report
     $report | ConvertTo-Json -Depth 8
 }
+if ($failure) { exit 1 }
+exit 0

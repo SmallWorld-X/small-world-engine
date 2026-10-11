@@ -19,20 +19,13 @@ param(
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $projectRoot = $PSScriptRoot
-$javaRoot = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\javac.exe'))) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$compilerTool = Join-Path $javaRoot 'bin\javac.exe'
-if (!(Test-Path -LiteralPath $compilerTool)) { throw '需要 Java 21 JDK。请设置 JAVA_HOME 后重试。' }
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object {
-    $jarFile = Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar"
-    if (!(Test-Path -LiteralPath $jarFile)) { throw "缺少本地 JSON 依赖：$jarFile" }
-    $jarFile
-}
-$classesRoot = Join-Path $projectRoot 'build\classes'
-$temporaryRoot = Join-Path $projectRoot 'build\tmp'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$compilerTool = $runtime.compilerTool
+$classesRoot = $runtime.classesRoot
+$temporaryRoot = $runtime.temporaryRoot
 New-Item -ItemType Directory -Path $classesRoot, $temporaryRoot -Force | Out-Null
-$classPath = (@($classesRoot) + $dependencies) -join ';'
+$classPath = $runtime.classPath
 $sourceFiles = @(Get-ChildItem -LiteralPath (Join-Path $projectRoot 'src\main\java') -Filter '*.java' -Recurse -File | ForEach-Object { $_.FullName })
 if ($Check -or $GenesisCheck -or $ExperienceCheck -or $GoalCheck -or $TimeCheck -or $ModuleVersionCheck -or $ConstructorVersionCheck -or $PreparationCheck -or $ReactionCheck -or $SkeletonCheck -or $IdentityCheck -or $ContinuationCheck) { $sourceFiles += @(Get-ChildItem -LiteralPath (Join-Path $projectRoot 'src\test\java') -Filter '*.java' -Recurse -File | ForEach-Object { $_.FullName }) }
 & $compilerTool '-J-Dfile.encoding=UTF-8' '-J-Dstdout.encoding=UTF-8' '-J-Dstderr.encoding=UTF-8' --release 21 -encoding UTF-8 -Xlint:all -cp $classPath -d $classesRoot @sourceFiles

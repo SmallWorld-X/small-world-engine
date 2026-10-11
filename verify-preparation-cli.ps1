@@ -4,11 +4,9 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 & (Join-Path $PSScriptRoot 'run.ps1') -BuildOnly
 if ($LASTEXITCODE -ne 0) { throw '准备分析验收编译未通过。' }
-$javaRoot = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\javac.exe'))) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object { Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar" }
-$classPath = (@((Join-Path $PSScriptRoot 'build\classes')) + $dependencies) -join ';'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$classPath = $runtime.classPath
 $runRoot = Join-Path $PSScriptRoot ('runs\preparation-cli-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $runRoot -Force | Out-Null
 $utf8 = [System.Text.UTF8Encoding]::new($false)

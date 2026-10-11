@@ -21,11 +21,9 @@ $expectedEventPlan = @(
     [pscustomobject]@{actor='apprentice';module='travel';to='warehouse'},
     [pscustomobject]@{actor='apprentice';module='observe';factId='cargo-handoff-status'}
 )
-$javaRoot = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\javac.exe'))) { $env:JAVA_HOME } else { 'D:\JavaJDK\jdk-21.0.5' }
-$javaTool = Join-Path $javaRoot 'bin\java.exe'
-$jarRoot = Join-Path $env:USERPROFILE '.m2\repository\com\fasterxml\jackson\core'
-$dependencies = @('jackson-databind', 'jackson-core', 'jackson-annotations') | ForEach-Object { Join-Path $jarRoot "$_\2.19.2\$_-2.19.2.jar" }
-$classPath = (@((Join-Path $PSScriptRoot 'build\classes')) + $dependencies) -join ';'
+$runtime = & (Join-Path $PSScriptRoot 'runtime.ps1')
+$javaTool = $runtime.javaTool
+$classPath = $runtime.classPath
 
 function Read-Json([string]$Path) { return (Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json) }
 function Copy-Json([object]$Value) { return ($Value | ConvertTo-Json -Depth 90 | ConvertFrom-Json) }
